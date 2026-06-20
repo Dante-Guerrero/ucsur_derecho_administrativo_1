@@ -155,6 +155,18 @@ body.overview-open .overviewPane{opacity:1;pointer-events:auto}
 .overviewThumb:hover,.overviewThumb.active{border-color:var(--orange);background:rgba(241,138,44,.12)}
 .overviewMini .thumbTitle{font:700 10px/1.1 Arial,sans-serif;left:7%;right:7%;top:28%}
 .overviewMeta span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:1.25;color:white}
+.slide .canvas{transition:box-shadow .28s ease,filter .28s ease}
+.slide.is-active .canvas{box-shadow:0 22px 62px rgba(0,0,0,.44),0 0 0 1px rgba(241,138,44,.16)}
+.slide-enter .canvas{animation:slideFocus .34s ease both}
+.slide.section-transition .canvas::after{content:"";position:absolute;left:0;right:0;top:12%;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.55;animation:sectionSweep .38s ease both;z-index:9;pointer-events:none}
+.reveal-item{opacity:0;transform:translateY(10px);transition:opacity .32s ease,transform .32s ease}
+.reveal-visible{opacity:1;transform:translateY(0)}
+@keyframes slideFocus{from{opacity:.92;filter:saturate(.94);transform:translateY(4px)}to{opacity:1;filter:saturate(1);transform:translateY(0)}}
+@keyframes sectionSweep{from{transform:translateX(-28%);opacity:0}45%{opacity:.55}to{transform:translateX(28%);opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .deck,.slide .canvas,.reveal-item,.laser-trace,.progress,.thumbPane,.overviewPane{transition:none!important;animation:none!important}
+  .reveal-item{opacity:1!important;transform:none!important}
+}
 @media (max-width:900px){.thumbPane{width:min(340px,82vw)}.overviewScroller{padding:16px}.overviewGrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}}
 @media print{body{display:block;background:white;overflow:visible}.deck{display:block;transform:none!important;width:auto;height:auto}.slide{page-break-after:always;width:100vw;height:56.25vw;background:white}.canvas{width:100vw;height:56.25vw;box-shadow:none}.controls,.progress,.thumbPane,.overviewPane,.laser-dot{display:none}}
 </style>
@@ -347,13 +359,47 @@ function syncSlideNumbers(){
     if(number) number.textContent = `N° ${i + 1}`;
   });
 }
+const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const revealSelector = '.card,.conceptCard,.quoteBox,.blueBlock,.noteBox,.debateBox,.debateCard,.caseCard,.activityCard,.flowItem,.qTile,.keyIdea,.matrix,.promptLead,.welcomeText,.sessionIntro,.sectionText';
+let revealTimer = 0;
+function prepareRevealItems(){
+  slides.forEach(slide => {
+    slide.querySelectorAll(revealSelector).forEach(item => item.classList.add('reveal-item'));
+  });
+}
+function revealSlide(slide, previousIdx = idx){
+  window.clearTimeout(revealTimer);
+  slides.forEach(item => item.classList.remove('is-active','slide-enter','section-transition'));
+  slide.classList.add('is-active');
+  if(motionQuery.matches){
+    slide.querySelectorAll('.reveal-item').forEach(item => item.classList.add('reveal-visible'));
+    return;
+  }
+  slide.classList.add('slide-enter');
+  const previousGroup = slides[previousIdx]?.dataset.group;
+  const currentGroup = slide.dataset.group;
+  if(previousIdx !== idx && previousGroup && previousGroup !== currentGroup) slide.classList.add('section-transition');
+  const items = Array.from(slide.querySelectorAll('.reveal-item'));
+  items.forEach(item => item.classList.remove('reveal-visible'));
+  items.forEach((item, i) => {
+    item.style.transitionDelay = `${Math.min(i * 45, 270)}ms`;
+    requestAnimationFrame(() => item.classList.add('reveal-visible'));
+  });
+  revealTimer = window.setTimeout(() => {
+    slide.classList.remove('slide-enter','section-transition');
+    items.forEach(item => { item.style.transitionDelay = ''; });
+  }, 520);
+}
+motionQuery.addEventListener?.('change', () => revealSlide(slides[idx]));
 function go(n){
+  const previousIdx = idx;
   idx = clamp(n, 0, slides.length - 1);
   deck.style.transform = `translateX(${-idx * 100}vw)`;
   counter.textContent = `${idx + 1} / ${slides.length}`;
   progress.style.width = `${((idx + 1) / slides.length) * 100}%`;
   location.hash = idx + 1;
   updateThumbs();
+  revealSlide(slides[idx], previousIdx);
 }
 window.addEventListener('keydown', event => {
   const key = event.key;
@@ -389,6 +435,7 @@ overviewButton.onclick = () => setOverview(!document.body.classList.contains('ov
 document.getElementById('thumbClose').onclick = () => setThumbs(false);
 document.getElementById('overviewClose').onclick = () => setOverview(false);
 window.addEventListener('resize', () => go(idx));
+prepareRevealItems();
 syncSlideNumbers();
 makeThumbs();
 makeOverview();

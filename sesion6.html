@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 6 - Potestades administrativas, legalidad y principios</title>
+<style>
+:root{
+  --blue:#001340;
+  --blue2:#0c3277;
+  --orange:#f18a2c;
+  --ink:#111827;
+  --muted:#4b5563;
+  --light:#f6f7f9;
+  --line:#d7dce3;
+  --soft:#eef3fb;
+  --font:"Carlito","Calibri","Aptos",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#222;color:var(--ink);font-family:var(--font);overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+.deck{width:100vw;height:100vh;display:flex;transition:transform .42s ease}
+.slide{width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:#2a2a2a;position:relative}
+.canvas{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:white;position:relative;overflow:hidden;box-shadow:0 18px 55px rgba(0,0,0,.38);font-size:clamp(18px,1.35vw,30px)}
+.topbar{position:absolute;left:0;right:0;top:0;height:12%;background:var(--blue)}
+.topbar:after{content:"";position:absolute;right:0;bottom:0;width:31%;height:28%;background:var(--orange)}
+.headerTitle{position:absolute;right:4.5%;top:4.1%;max-width:68%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:white;font-size:1.02em;font-style:italic;text-align:right}
+.content{position:absolute;left:5%;right:5%;top:15.2%;bottom:11%;display:flex;flex-direction:column;gap:.72em;overflow:hidden}
+.content.narrow{left:7%;right:7%}
+h1,h2,h3,p{margin:0}
+h1{font-size:2.1em;line-height:1.07;font-weight:700}
+h2{font-size:1.42em;line-height:1.13;color:var(--blue)}
+h3{font-size:1.06em;line-height:1.14;color:var(--blue);margin-bottom:.35em}
+p{font-size:.94em;line-height:1.3}
+ul{margin:.12em 0 0 1.05em;padding:0}
+li{font-size:.92em;line-height:1.27;margin:.33em 0}
+.slideNo{position:absolute;right:3.2%;bottom:2.7%;min-width:3.1em;height:1.5em;background:var(--blue);color:white;font-size:.50em;font-weight:700;display:flex;align-items:center;justify-content:center}
+.source{margin-top:auto;color:#6b7280;font-size:.55em!important;line-height:1.18}
+.waiting .canvas{background:var(--blue)}
+.waiting .brandMark{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,0) 55%)}
+.waiting .orangeBlock{position:absolute;left:0;bottom:0;width:38%;height:7%;background:var(--orange)}
+.waiting .waitCopy{position:absolute;left:10%;right:10%;top:50%;transform:translateY(-50%);color:white;text-align:center}
+.waiting .waitCopy h1{font-size:2.45em;line-height:1.05}
+.waiting .waitCopy p{margin-top:1em;font-size:1.08em;color:#dbeafe}
+.welcomeText{position:absolute;left:39%;right:6%;top:22%;bottom:13%;display:flex;flex-direction:column;justify-content:center}
+.welcomeText h1{font-size:2.26em;line-height:1.05;color:var(--blue)}
+.welcomeText p{font-size:1.03em;line-height:1.32;margin-top:1em;color:#374151}
+.bgLeft{position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(0,19,64,.92) 0 31%,rgba(0,19,64,.72) 31% 35%,transparent 35%),
+  radial-gradient(circle at 18% 24%,rgba(241,138,44,.55),transparent 18%),
+  linear-gradient(135deg,#f8fafc 0,#fff 62%,#eef3fb 100%)}
+.sectionText{position:absolute;left:38%;right:5.2%;top:31%;bottom:14%;display:flex;flex-direction:column;justify-content:center}
+.sectionText h1{font-size:1.55em;line-height:1.14;text-transform:uppercase;font-weight:500;letter-spacing:.01em}
+.sectionText p{font-size:.92em;margin-top:1.1em;color:#24406c}
+.sessionIntro{position:absolute;left:10%;right:10%;top:25%;bottom:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--blue)}
+.sessionIntro h1{font-size:1.88em;line-height:1.14;font-weight:600;max-width:1040px}
+.sessionIntro p{font-size:.98em;line-height:1.35;margin:1.25em auto 0;max-width:850px;color:#374151}
+.thinRule{width:160px;height:5px;background:var(--orange);border-radius:999px;margin:1.6em auto 0}
+.tiny{font-size:.66em!important;color:#24406c;margin-top:2.1em!important}
+.threeCols,.twoCols,.fourGrid,.conceptGrid,.compareGrid{display:grid;gap:1em;flex:1;min-height:0;align-items:stretch}
+.threeCols{grid-template-columns:repeat(3,minmax(0,1fr))}
+.twoCols{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fourGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.conceptGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.compareGrid{grid-template-columns:1fr .9fr}
+.card,.conceptCard,.quoteBox,.debateCard,.caseCard,.activityCard{border:1px solid var(--line);background:#fff;padding:1em 1.05em;box-shadow:0 5px 0 rgba(0,0,0,.045);min-height:0;display:flex;flex-direction:column}
+.card.blue,.blueBlock{background:var(--blue);color:#fff;border-color:var(--blue)}
+.card.blue h3,.blueBlock h2,.blueBlock h3{color:#fff}
+.card span,.conceptCard span{display:inline-block;font-size:.72em;color:var(--blue2);font-weight:700;text-transform:uppercase;margin-bottom:.42em}
+.card.blue span{color:#b7cdfa}
+.conceptCard{background:#f7f9fc}
+.conceptCard h3{font-size:1.12em}
+.conceptCard p{font-size:.88em}
+.question{font-weight:700;color:#24406c;font-size:.82em!important;margin-top:auto;border-top:1px solid var(--line);padding-top:.55em}
+.blueBlock{padding:1em 1.1em;box-shadow:0 10px 0 rgba(0,0,0,.08)}
+.centerBlock{margin:auto;max-width:78%;padding:1.2em 1.55em;text-align:center}
+.centerBlock h2{font-size:1.38em;line-height:1.16}
+.quoteBox{background:#f2f3f5;border-left:.7em solid var(--blue);position:relative}
+.quoteBox.light{background:white;border:1px solid var(--line);border-left:.7em solid var(--blue)}
+.quoteMark{font-size:3.2em;line-height:.8;color:#d8dde6;font-weight:700;position:absolute;right:.18em;bottom:.05em}
+.quoteBox p{position:relative;z-index:1;font-size:.86em;line-height:1.27}
+.noteBox,.debateBox{background:#fff7ed;border:1px solid #fed7aa;border-left:.55em solid var(--orange);padding:.65em .75em;font-size:.78em;line-height:1.24;color:#7c2d12}
+.matrix{width:100%;border-collapse:collapse;font-size:.64em;background:white}
+.matrix th{background:var(--blue);color:white;text-align:left;padding:.55em}
+.matrix td{border:1px solid #cfd5dd;padding:.52em .58em;vertical-align:top;line-height:1.22}
+.matrix tr:nth-child(even) td{background:#f3f6fa}
+.flow{display:grid;grid-template-columns:1fr .22fr 1fr .22fr 1fr;gap:.35em;align-items:center;flex:1;min-height:0}
+.flowItem{border:1px solid var(--line);background:#fff;padding:.78em .65em;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.flowItem b{font-size:1.7em;color:var(--blue);line-height:1}
+.flowItem span{font-size:.86em;font-weight:700;margin:.28em 0;color:#111827}
+.flowItem small{font-size:.72em;color:#4b5563;line-height:1.18}
+.arrow{font-size:1.45em;color:var(--orange);text-align:center;font-weight:700}
+.keyIdeas{display:grid;grid-template-columns:1fr;gap:.28em;flex:1;min-height:0}
+.keyIdea{display:grid;grid-template-columns:2.45em 1fr;gap:.52em;align-items:start;border-bottom:1px solid var(--line);padding:.26em 0 .34em}
+.keyIdea b{display:flex;align-items:center;justify-content:center;width:1.85em;height:1.85em;border-radius:50%;background:var(--blue);color:white;font-size:.66em}
+.keyIdea h3{font-size:.78em;line-height:1.12;margin:0;color:var(--blue)}
+.keyIdea p{font-size:.62em;line-height:1.18;margin:.1em 0 0}
+.caseCard{background:#f8fafc;border-left:6px solid var(--blue2)}
+.activityCard{background:#f8fafc;border-radius:0}
+.promptLead{font-size:.82em;line-height:1.26;color:#334155;margin-bottom:.35em}
+.questionTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55em;margin-top:.25em}
+.qTile{background:white;border:1px solid #dbe3ef;border-left:5px solid var(--blue2);padding:.62em .72em;box-shadow:0 5px 14px rgba(10,25,60,.055)}
+.qTile h3{font-size:.82em;margin:0 0 .28em}
+.qTile p{font-size:.69em;line-height:1.22}
+.finalThanks .canvas{background:linear-gradient(135deg,#ffffff 0%,#f7f9fc 56%,#eef3fb 100%)}
+.thanksAccent{position:absolute;left:0;top:0;bottom:0;width:2.4%;background:var(--orange)}
+.thanksWrap{position:absolute;left:12%;right:12%;top:50%;transform:translateY(-50%);text-align:left;color:var(--blue)}
+.thanksKicker{color:var(--orange);font-size:1.02em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.65em}
+.finalThanks h1{font-size:4.25em;line-height:.95;letter-spacing:-.035em}
+.thanksRule{width:9.8em;height:.18em;margin:1.25em 0 1.15em;background:var(--orange);border-radius:999px}
+.thanksName{font-size:1.42em;font-weight:700;color:#111827;margin:.15em 0 0}
+.thanksEmail,.thanksUni{font-size:1.05em;color:#374151;margin:.28em 0 0}
+.controls{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;display:flex;gap:7px;align-items:center;background:rgba(0,0,0,.45);color:white;border-radius:999px;padding:5px 9px;font-family:Arial,sans-serif;font-size:13px;z-index:50;opacity:.18;transition:opacity .18s ease}
+.controls:hover,.controls:focus-within{opacity:1}
+.controls button{border:0;border-radius:999px;background:white;color:#111;padding:4px 8px;font-weight:700;cursor:pointer;font-size:12px}
+.controls button.active{background:var(--orange);color:white}
+.progress{position:fixed;left:0;bottom:0;height:4px;background:var(--orange);width:0;z-index:60;transition:width .3s ease}
+.laser-dot{position:fixed;width:20px;height:20px;margin-left:-10px;margin-top:-10px;border-radius:50%;background:#ff1f1f;box-shadow:0 0 0 6px rgba(255,31,31,.18),0 0 28px 10px rgba(255,31,31,.42);z-index:120;pointer-events:none;display:none}
+body.laser-on .laser-dot{display:block}
+body.laser-on .slide{cursor:none}
+.laser-trace{position:fixed;width:12px;height:12px;margin-left:-6px;margin-top:-6px;border-radius:50%;background:#ff1f1f;box-shadow:0 0 0 5px rgba(255,31,31,.16),0 0 18px 8px rgba(255,31,31,.28);pointer-events:none;z-index:119;animation:laserFade .9s ease-out forwards}
+@keyframes laserFade{0%{opacity:.78;transform:scale(1)}100%{opacity:0;transform:scale(.35)}}
+.thumbPane{position:fixed;top:0;right:0;width:min(360px,32vw);height:100vh;background:rgba(15,23,42,.96);color:white;z-index:110;transform:translateX(105%);opacity:0;pointer-events:none;transition:transform .25s ease,opacity .25s ease;box-shadow:-18px 0 40px rgba(0,0,0,.34);display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.16)}
+body.thumbs-open .thumbPane{transform:translateX(0);opacity:1;pointer-events:auto}
+.thumbHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 16px 12px;border-bottom:1px solid rgba(255,255,255,.14);font-family:Arial,sans-serif}
+.thumbHeader strong{font-size:15px}
+.thumbHeader button,.overviewHeader button{border:0;border-radius:999px;background:white;color:#111;font-weight:700;padding:5px 10px;cursor:pointer}
+.thumbList{overflow:auto;padding:12px 12px 18px;display:grid;gap:10px}
+.thumb{display:grid;grid-template-columns:116px 1fr;gap:10px;text-align:left;width:100%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:white;border-radius:12px;padding:8px;cursor:pointer}
+.thumb:hover,.thumb.active{border-color:var(--orange);background:rgba(241,138,44,.18)}
+.thumbMini,.overviewMini{aspect-ratio:16/9;background:#fff;border-radius:5px;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.thumbMini:before,.overviewMini:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f4f6fa 0 48%,#fff 48% 100%)}
+.thumbTop{position:absolute;left:0;right:0;top:0;height:19%;background:var(--blue)}
+.thumbTitle{position:absolute;left:8%;right:8%;top:28%;font:700 7px/1.08 Arial,sans-serif;color:#111;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.thumbLines{position:absolute;left:8%;right:8%;top:56%;height:26%;background:repeating-linear-gradient(to bottom,#d7dce3 0 2px,transparent 2px 7px)}
+.thumbMeta{font-family:Arial,sans-serif;display:flex;flex-direction:column;gap:3px;justify-content:center;min-width:0}
+.thumbMeta strong,.overviewMeta strong{font-size:12px;color:#f7b77d}
+.thumbMeta span{font-size:13px;line-height:1.22;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.overviewPane{position:fixed;inset:0;background:rgba(15,23,42,.90);backdrop-filter:blur(4px);color:white;z-index:115;opacity:0;pointer-events:none;transition:opacity .25s ease;display:flex;flex-direction:column}
+body.overview-open .overviewPane{opacity:1;pointer-events:auto}
+.overviewHeader{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.14);font-family:Arial,sans-serif}
+.overviewHeader strong{font-size:18px}
+.overviewHeader small{display:block;color:rgba(255,255,255,.72);font-size:12px;margin-top:3px}
+.overviewScroller{overflow:auto;padding:20px 24px 28px}
+.overviewGroup{margin:0 0 24px}
+.overviewGroupHeader{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.overviewGroupHeader h3{margin:0;font:700 18px/1.2 Arial,sans-serif;color:white}
+.overviewGroupHeader p{margin:0;font:400 12px/1.3 Arial,sans-serif;color:rgba(255,255,255,.68)}
+.overviewGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.overviewThumb{display:flex;flex-direction:column;gap:10px;text-align:left;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:14px;padding:10px;cursor:pointer}
+.overviewThumb:hover,.overviewThumb.active{border-color:var(--orange);background:rgba(241,138,44,.12)}
+.overviewMini .thumbTitle{font:700 10px/1.1 Arial,sans-serif;left:7%;right:7%;top:28%}
+.overviewMeta span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:1.25;color:white}
+@media (max-width:900px){.thumbPane{width:min(340px,82vw)}.overviewScroller{padding:16px}.overviewGrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}}
+@media print{body{display:block;background:white;overflow:visible}.deck{display:block;transform:none!important;width:auto;height:auto}.slide{page-break-after:always;width:100vw;height:56.25vw;background:white}.canvas{width:100vw;height:56.25vw;box-shadow:none}.controls,.progress,.thumbPane,.overviewPane,.laser-dot{display:none}}
+</style>
+</head>
+<body>
+<main class="deck">
+<section class="slide waiting" data-group="Apertura"><div class="canvas"><div class="brandMark"></div><div class="waitCopy">
+<h1>Derecho Administrativo 1</h1>
+<p>Sesión 6 · La clase iniciará en breve</p>
+</div><div class="orangeBlock"></div></div></section>
+
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><div class="sessionIntro">
+<h1>Bienvenidos a la Sesión Nº 6 del curso de Derecho Administrativo 1, en breve daremos inicio a la clase</h1>
+<div class="thinRule"></div>
+<p>Potestades administrativas, principio de legalidad, actividad reglamentaria, actividad discrecional y principios del procedimiento administrativo.</p>
+</div><div class="slideNo">N° 2</div></div></section>
+
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="bgLeft"></div><div class="welcomeText">
+<h1>Potestades administrativas, legalidad y principios</h1>
+<p>Sesión 6 · Derecho Administrativo 1</p>
+<p class="tiny">Profesor Dante Ramón Guerrero Barreto · Universidad Científica del Sur</p>
+</div><div class="slideNo">N° 3</div></div></section>
+
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Objetivos de aprendizaje</div><div class="content">
+<div class="threeCols">
+<div class="card blue"><span>01</span><h3>Comprender</h3><p>Relacionar potestad, competencia, legalidad y finalidad pública en la actuación administrativa.</p></div>
+<div class="card"><span>02</span><h3>Diferenciar</h3><p>Separar actividad reglada, discrecional y reglamentaria sin perder el marco del ordenamiento jurídico.</p></div>
+<div class="card"><span>03</span><h3>Aplicar</h3><p>Usar principios del artículo IV para analizar decisiones administrativas concretas.</p></div>
+</div>
+<p class="source">Fuente base: syllabus del curso, semana/sesión 6; sesión6.md; art. IV del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 4</div></div></section>
+
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Mapa de clase</div><div class="content">
+<div class="threeCols">
+<div class="card blue"><span>Bloque I</span><h3>Potestades y sujeción</h3><p>La Administración actúa con poderes jurídicos atribuidos y los administrados quedan sometidos dentro de límites legales.</p></div>
+<div class="card"><span>Bloque II</span><h3>Legalidad y discrecionalidad</h3><p>Vinculación al ordenamiento, actividad reglada, márgenes de apreciación y control de finalidad.</p></div>
+<div class="card"><span>Bloque III</span><h3>Principios y casos</h3><p>Artículo IV de la LPAG, ejemplos peruanos, debate y actividad breve.</p></div>
+</div>
+<p class="source">Fuente base: syllabus del curso; material de sesión 6 y material de principios del art. IV.</p>
+</div><div class="slideNo">N° 5</div></div></section>
+
+<section class="slide" data-group="Desarrollo conceptual"><div class="canvas"><div class="bgLeft"></div><div class="sectionText">
+<h1>I. Desarrollo conceptual</h1>
+<p>Potestad, competencia, sujeción y legalidad administrativa.</p>
+</div><div class="slideNo">N° 6</div></div></section>
+
+<section class="slide" data-group="Desarrollo conceptual"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Tres preguntas iniciales</div><div class="content">
+<div class="conceptGrid">
+<div class="conceptCard"><span>Potestad</span><h3>¿Con qué poder actúa?</h3><p>Poder jurídico atribuido a la Administración para producir efectos obligatorios.</p><p class="question">Ejemplos: reglamentar, fiscalizar, sancionar, autorizar.</p></div>
+<div class="conceptCard"><span>Competencia</span><h3>¿Quién puede actuar?</h3><p>Distribuye válidamente ese poder entre entidades y órganos.</p><p class="question">Sin competencia no hay actuación válida.</p></div>
+<div class="conceptCard"><span>Finalidad</span><h3>¿Para qué actúa?</h3><p>La potestad se ejerce para el fin público previsto por el ordenamiento.</p><p class="question">La desviación de finalidad vulnera legalidad.</p></div>
+</div>
+<p class="source">Referencia: sesión6.md; material del art. IV del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 7</div></div></section>
+
+<section class="slide" data-group="Desarrollo conceptual"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Idea fuerza</div><div class="content">
+<div class="blueBlock centerBlock">
+<h2>La Administración no actúa desde una libertad general: actúa desde potestades atribuidas, dentro de competencia y para una finalidad pública.</h2>
+</div>
+<p class="source">Referencia: principio de legalidad del art. IV del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 8</div></div></section>
+
+<section class="slide" data-group="Desarrollo conceptual"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Sujeción de los administrados</div><div class="content">
+<div class="twoCols">
+<div class="card blue"><h3>Relación de poder público</h3><p>La actuación administrativa puede imponer deberes, cargas, restricciones o consecuencias jurídicas.</p></div>
+<div class="card"><h3>Límite jurídico</h3><p>Esa sujeción exige habilitación normativa, procedimiento válido, proporcionalidad y respeto de derechos.</p></div>
+</div>
+<div class="noteBox"><b>Regla práctica:</b> cuando una entidad limita la esfera del administrado, debe explicar competencia, base normativa, finalidad y razones de la medida.</div>
+<p class="source">Referencia: sesión6.md; art. IV del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 9</div></div></section>
+
+<section class="slide" data-group="Desarrollo conceptual"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Legalidad administrativa</div><div class="content">
+<div class="quoteBox light">
+<div class="quoteMark">IV</div>
+<p>La autoridad administrativa debe actuar con respeto a la Constitución, la ley y al derecho, dentro de las facultades atribuidas y conforme a los fines para los que fueron conferidas.</p>
+</div>
+<div class="threeCols">
+<div class="card"><h3>Constitución</h3><p>Parámetro superior de validez e interpretación.</p></div>
+<div class="card"><h3>Ley y derecho</h3><p>Habilitan, limitan y orientan la actuación administrativa.</p></div>
+<div class="card"><h3>Finalidad</h3><p>Evita usar potestades para fines ajenos al interés general previsto.</p></div>
+</div>
+<p class="source">Fuente: D.S. N° 006-2026-JUS, TUO de la Ley 27444, Título Preliminar, art. IV.</p>
+</div><div class="slideNo">N° 10</div></div></section>
+
+<section class="slide" data-group="Desarrollo conceptual"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Reglada, discrecional y reglamentaria</div><div class="content">
+<table class="matrix">
+<thead><tr><th>Categoría</th><th>Pregunta central</th><th>Riesgo jurídico</th><th>Control esperable</th></tr></thead>
+<tbody>
+<tr><td>Actividad reglada</td><td>¿La norma fija la consecuencia?</td><td>Aplicación mecánica sin verificar hechos o competencia.</td><td>Legalidad, hechos, procedimiento y motivación.</td></tr>
+<tr><td>Actividad discrecional</td><td>¿La norma deja margen de elección?</td><td>Confundir margen con arbitrariedad.</td><td>Finalidad, razonabilidad, proporcionalidad y motivación.</td></tr>
+<tr><td>Actividad reglamentaria</td><td>¿La Administración produce reglas generales?</td><td>Exceder o alterar la ley habilitante.</td><td>Jerarquía normativa, competencia y límites materiales.</td></tr>
+</tbody>
+</table>
+<p class="source">Fuente: sesión6.md; syllabus del curso. Referencia complementaria sobre actos reglados y discrecionales: TC, Exp. 0090-2004-AA/TC, citado en syllabus.</p>
+</div><div class="slideNo">N° 11</div></div></section>
+
+<section class="slide" data-group="Marco normativo"><div class="canvas"><div class="bgLeft"></div><div class="sectionText">
+<h1>II. Marco normativo</h1>
+<p>Fuentes, principios y controles del procedimiento administrativo.</p>
+</div><div class="slideNo">N° 12</div></div></section>
+
+<section class="slide" data-group="Marco normativo"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Fuentes del procedimiento administrativo</div><div class="content">
+<div class="twoCols">
+<div class="card blue"><h3>Ordenamiento administrativo</h3><p>La LPAG reconoce un sistema orgánico con autonomía respecto de otras ramas del Derecho.</p></div>
+<div class="card"><h3>Fuentes principales</h3><ul><li>Constitución.</li><li>Tratados incorporados.</li><li>Leyes y normas equivalentes.</li><li>Reglamentos y normas subordinadas.</li><li>Jurisprudencia, precedentes, opiniones vinculantes y principios.</li></ul></div>
+</div>
+<p class="source">Fuente: sesión6.md, transcripción del art. V del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 13</div></div></section>
+
+<section class="slide" data-group="Marco normativo"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Principios que limitan el poder</div><div class="content">
+<div class="fourGrid">
+<div class="card"><h3>Legalidad</h3><p>Competencia, base jurídica y finalidad pública.</p></div>
+<div class="card"><h3>Razonabilidad</h3><p>Medidas idóneas, necesarias y proporcionadas.</p></div>
+<div class="card"><h3>Imparcialidad</h3><p>Tratamiento igualitario y decisión orientada por el interés general.</p></div>
+<div class="card"><h3>Ejercicio legítimo</h3><p>Prohibición de abuso de poder o desviación contra el interés general.</p></div>
+</div>
+<p class="source">Fuente: material de principios del art. IV del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 14</div></div></section>
+
+<section class="slide" data-group="Marco normativo"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Garantía, gestión y confianza</div><div class="content">
+<div class="threeCols">
+<div class="card blue"><h3>Debido procedimiento</h3><p>Notificación, defensa, prueba, motivación, plazo razonable e impugnación.</p></div>
+<div class="card"><h3>Gestión del trámite</h3><p>Impulso de oficio, celeridad, eficacia y verdad material.</p></div>
+<div class="card"><h3>Confianza administrativa</h3><p>Información confiable, criterios previsibles y motivación ante cambios de interpretación.</p></div>
+</div>
+<p class="source">Fuente: material de principios del art. IV del TUO de la Ley 27444.</p>
+</div><div class="slideNo">N° 15</div></div></section>
+
+<section class="slide" data-group="Marco normativo"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Control difuso y control de convencionalidad</div><div class="content">
+<div class="twoCols">
+<div class="card"><h3>Control difuso administrativo</h3><p>El syllabus lo plantea como debate de la sesión. El alcance aplicable requiere precisión jurisprudencial antes de afirmarlo como regla general.</p><p class="question">Fuente pendiente de verificación para desarrollo jurisprudencial específico.</p></div>
+<div class="card"><h3>Control de convencionalidad</h3><p>Permite discutir cómo los tratados y estándares internacionales inciden sobre la actuación administrativa.</p><p class="question">Fuente pendiente de verificación para criterio jurisprudencial concreto.</p></div>
+</div>
+<div class="noteBox"><b>Criterio docente:</b> presentar ambos temas como preguntas de discusión, no como regla cerrada si no se revisa la jurisprudencia específica.</div>
+<p class="source">Fuente: syllabus del curso, sesión 6; sesión6.md sobre tratados e influencia internacional.</p>
+</div><div class="slideNo">N° 16</div></div></section>
+
+<section class="slide" data-group="Marco normativo"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Potestad sancionadora: límite reforzado</div><div class="content">
+<div class="flow">
+<div class="flowItem"><b>1</b><span>Base normativa</span><small>La potestad debe estar atribuida por disposición legal o reglamentaria.</small></div>
+<div class="arrow">→</div>
+<div class="flowItem"><b>2</b><span>Procedimiento</span><small>Deben respetarse reglas de imputación, defensa e instrucción.</small></div>
+<div class="arrow">→</div>
+<div class="flowItem"><b>3</b><span>Decisión motivada</span><small>Sanción compatible con razonabilidad, causalidad y culpabilidad.</small></div>
+</div>
+<p class="source">Fuente: D.S. N° 006-2026-JUS, TUO de la Ley 27444, arts. 230, 231 y 234, según material convertido.</p>
+</div><div class="slideNo">N° 17</div></div></section>
+
+<section class="slide" data-group="Ejemplos peruanos"><div class="canvas"><div class="bgLeft"></div><div class="sectionText">
+<h1>III. Ejemplos peruanos</h1>
+<p>Cómo se observan las categorías en actuaciones administrativas concretas.</p>
+</div><div class="slideNo">N° 18</div></div></section>
+
+<section class="slide" data-group="Ejemplos peruanos"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Ejemplo 1: fiscalización y sanción municipal</div><div class="content">
+<div class="compareGrid">
+<div class="caseCard"><h3>Situación</h3><p>Una municipalidad fiscaliza una actividad económica local y evalúa imponer una multa por operar sin autorización.</p></div>
+<div class="card"><h3>Preguntas jurídicas</h3><ul><li>¿Qué norma atribuye competencia?</li><li>¿Cuál es la infracción tipificada?</li><li>¿La medida es proporcional al fin público?</li><li>¿Se respetó el derecho de defensa?</li></ul></div>
+</div>
+<p class="source">Ejemplo construido a partir de categorías del art. IV y régimen sancionador del TUO de la Ley 27444. No se cita expediente específico.</p>
+</div><div class="slideNo">N° 19</div></div></section>
+
+<section class="slide" data-group="Ejemplos peruanos"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Ejemplo 2: TUPA y requisitos administrativos</div><div class="content">
+<div class="twoCols">
+<div class="card blue"><h3>Problema típico</h3><p>La entidad exige un documento no previsto para tramitar una solicitud o añade una condición sin sustento objetivo.</p></div>
+<div class="card"><h3>Principios afectados</h3><ul><li>Legalidad.</li><li>Simplicidad.</li><li>Uniformidad.</li><li>Predictibilidad o confianza legítima.</li></ul></div>
+</div>
+<div class="noteBox"><b>Lectura para clase:</b> la simplificación no elimina control; desplaza parte del control hacia la fiscalización posterior cuando corresponde.</div>
+<p class="source">Fuente: material de principios del art. IV; TUO de la Ley 27444 sobre deberes y prohibiciones de autoridades, según material convertido.</p>
+</div><div class="slideNo">N° 20</div></div></section>
+
+<section class="slide" data-group="Ejemplos peruanos"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Ejemplo 3: acto reglado y discrecionalidad</div><div class="content">
+<div class="twoCols">
+<div class="card"><h3>Acto reglado</h3><p>Si el administrado cumple todos los requisitos previstos, la autoridad no puede añadir criterios de oportunidad no habilitados.</p></div>
+<div class="card"><h3>Discrecionalidad</h3><p>Si la norma permite elegir entre medidas, la autoridad debe motivar por qué la opción elegida es razonable y adecuada al fin.</p></div>
+</div>
+<div class="debateBox"><b>Pregunta:</b> ¿en qué momento una decisión discrecional deja de ser discrecional y pasa a ser arbitraria?</div>
+<p class="source">Referencia: syllabus, TC Exp. 0090-2004-AA/TC citado para actos reglados, discrecionales y conceptos jurídicos indeterminados. Desarrollo específico pendiente de verificación directa.</p>
+</div><div class="slideNo">N° 21</div></div></section>
+
+<section class="slide" data-group="Caso y debate"><div class="canvas"><div class="bgLeft"></div><div class="sectionText">
+<h1>IV. Caso breve y debate</h1>
+<p>Aplicación guiada para distinguir legalidad, discrecionalidad y principios.</p>
+</div><div class="slideNo">N° 22</div></div></section>
+
+<section class="slide" data-group="Caso y debate"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Caso breve: licencia y fiscalización</div><div class="content">
+<div class="caseCard">
+<h3>Supuesto</h3>
+<p>Una entidad rechaza una solicitud de autorización porque falta un anexo menor. El administrado ofrece subsanarlo el mismo día. La entidad, además, inicia fiscalización y anuncia una posible sanción por operar sin autorización.</p>
+</div>
+<div class="threeCols">
+<div class="card"><h3>Legalidad</h3><p>¿La entidad aplicó el requisito correcto?</p></div>
+<div class="card"><h3>Informalismo</h3><p>¿El defecto podía subsanarse sin afectar terceros?</p></div>
+<div class="card"><h3>Sanción</h3><p>¿Hay tipificación, competencia y procedimiento?</p></div>
+</div>
+<p class="source">Caso didáctico construido con base en art. IV y régimen sancionador del TUO de la Ley 27444. No corresponde a expediente real identificado.</p>
+</div><div class="slideNo">N° 23</div></div></section>
+
+<section class="slide" data-group="Caso y debate"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Preguntas de debate</div><div class="content">
+<p class="promptLead">Respondan con una regla jurídica y una consecuencia práctica.</p>
+<div class="questionTiles">
+<div class="qTile"><h3>1. Legalidad</h3><p>¿Puede la entidad crear un requisito para cerrar un vacío práctico?</p></div>
+<div class="qTile"><h3>2. Discrecionalidad</h3><p>¿Qué debe motivar cuando tiene varias medidas posibles?</p></div>
+<div class="qTile"><h3>3. Principios</h3><p>¿Qué principio protege mejor al administrado frente a formalismos?</p></div>
+<div class="qTile"><h3>4. Control</h3><p>¿Qué cambia si la medida afecta derechos fundamentales?</p></div>
+</div>
+<div class="debateBox"><b>Regla de discusión:</b> no basta invocar un principio; hay que explicar cómo opera frente al hecho.</div>
+</div><div class="slideNo">N° 24</div></div></section>
+
+<section class="slide" data-group="Caso y debate"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Actividad breve: matriz de decisión</div><div class="content">
+<table class="matrix">
+<thead><tr><th>Paso</th><th>Pregunta</th><th>Respuesta esperada</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Competencia</td><td>Identificar entidad, órgano y norma habilitante.</td></tr>
+<tr><td>2</td><td>Potestad</td><td>Precisar si autoriza, fiscaliza, sanciona, reglamenta o resuelve.</td></tr>
+<tr><td>3</td><td>Procedimiento</td><td>Verificar notificación, defensa, prueba, plazo y motivación.</td></tr>
+<tr><td>4</td><td>Principios</td><td>Aplicar legalidad, razonabilidad, informalismo, verdad material o predictibilidad.</td></tr>
+<tr><td>5</td><td>Conclusión</td><td>Determinar validez, subsanación posible o vicio relevante.</td></tr>
+</tbody>
+</table>
+<p class="source">Fuente: art. IV del TUO de la Ley 27444; estructura didáctica elaborada para clase.</p>
+</div><div class="slideNo">N° 25</div></div></section>
+
+<section class="slide" data-group="Cierre"><div class="canvas"><div class="topbar"></div><div class="headerTitle">Cierre: 5 ideas clave</div><div class="content">
+<div class="keyIdeas">
+<div class="keyIdea"><b>1</b><div><h3>La potestad necesita atribución jurídica</h3><p>La Administración no parte de libertad general; requiere habilitación, competencia y finalidad pública.</p></div></div>
+<div class="keyIdea"><b>2</b><div><h3>La legalidad incluye Constitución, ley y derecho</h3><p>No basta citar una norma: debe actuarse dentro de facultades y fines conferidos.</p></div></div>
+<div class="keyIdea"><b>3</b><div><h3>La discrecionalidad no equivale a arbitrariedad</h3><p>El margen de decisión se controla por motivación, razonabilidad, proporcionalidad y finalidad.</p></div></div>
+<div class="keyIdea"><b>4</b><div><h3>Los principios tienen función normativa</h3><p>Orientan interpretación, llenan vacíos y controlan el ejercicio del poder administrativo.</p></div></div>
+<div class="keyIdea"><b>5</b><div><h3>El caso se analiza por capas</h3><p>Primero competencia y potestad; luego procedimiento, hechos, principios y consecuencia jurídica.</p></div></div>
+</div>
+<p class="source">Fuentes: sesión6.md; art. IV y art. V del TUO de la Ley 27444; material de principios.</p>
+</div><div class="slideNo">N° 26</div></div></section>
+
+<section class="slide finalThanks" data-group="Cierre"><div class="canvas"><div class="thanksAccent"></div><div class="thanksWrap">
+<p class="thanksKicker">Derecho Administrativo 1</p>
+<h1>Gracias</h1>
+<div class="thanksRule"></div>
+<p class="thanksName">Profesor Dante Guerrero</p>
+<p class="thanksEmail">dguerrerob@cientifica.edu.pe</p>
+<p class="thanksUni">Universidad Científica del Sur</p>
+</div><div class="slideNo">N° 27</div></div></section>
+</main>
+
+<div class="controls">
+<button id="prev" title="Anterior">←</button>
+<span id="counter"></span>
+<button id="next" title="Siguiente">→</button>
+<button id="laser" title="Activar puntero láser">Láser</button>
+<button id="thumbToggle" title="Ver miniaturas laterales">Miniaturas</button>
+<button id="overviewToggle" title="Ver vista general por secciones">Vista general</button>
+</div>
+<aside aria-label="Navegador de miniaturas" class="thumbPane">
+<div class="thumbHeader"><strong>Vista de miniaturas</strong><button id="thumbClose">Cerrar</button></div>
+<div class="thumbList"></div>
+</aside>
+<section aria-label="Vista general por secciones" class="overviewPane">
+<div class="overviewHeader">
+<div><strong>Vista general por secciones</strong><small>Miniaturas agrupadas por bloques temáticos</small></div>
+<button id="overviewClose">Cerrar</button>
+</div>
+<div class="overviewScroller"><div class="overviewGroups"></div></div>
+</section>
+<div aria-hidden="true" class="laser-dot"></div>
+<div class="progress"></div>
+
+<script>
+const deck = document.querySelector('.deck');
+const slides = Array.from(document.querySelectorAll('.slide'));
+const counter = document.getElementById('counter');
+const progress = document.querySelector('.progress');
+const laserButton = document.getElementById('laser');
+const thumbButton = document.getElementById('thumbToggle');
+const overviewButton = document.getElementById('overviewToggle');
+const thumbList = document.querySelector('.thumbList');
+const overviewGroups = document.querySelector('.overviewGroups');
+const laserDot = document.querySelector('.laser-dot');
+let idx = 0;
+let laserOn = false;
+let lastTraceAt = 0;
+
+function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+function slideTitle(slide, i){
+  return slide.querySelector('.headerTitle')?.textContent.trim()
+    || slide.querySelector('.welcomeText h1, .sectionText h1, h1, h2, h3')?.textContent.trim()
+    || `Diapositiva ${i + 1}`;
+}
+function escapeHtml(text){
+  return text.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function sectionForSlide(slide, i){
+  const group = slide.dataset.group || 'Contenido';
+  const details = {
+    'Apertura':'Contexto, objetivos y ruta de clase',
+    'Desarrollo conceptual':'Potestad, competencia, sujeción y legalidad',
+    'Marco normativo':'LPAG, principios y controles',
+    'Ejemplos peruanos':'Aplicaciones prácticas en la Administración Pública',
+    'Caso y debate':'Discusión y actividad guiada',
+    'Cierre':'Síntesis y agradecimiento'
+  };
+  return {key:group.toLowerCase().replace(/\s+/g,'-'), name:group, detail:details[group] || ''};
+}
+function thumbPreview(title){
+  return `<div class="thumbMini"><div class="thumbTop"></div><div class="thumbTitle">${escapeHtml(title)}</div><div class="thumbLines"></div></div>`;
+}
+function makeThumbs(){
+  thumbList.innerHTML = '';
+  slides.forEach((slide, i) => {
+    const button = document.createElement('button');
+    const title = slideTitle(slide, i);
+    button.type = 'button';
+    button.className = 'thumb';
+    button.innerHTML = `${thumbPreview(title)}<div class="thumbMeta"><strong>N° ${i + 1}</strong><span>${escapeHtml(title)}</span></div>`;
+    button.addEventListener('click', () => { go(i); setThumbs(false); });
+    thumbList.appendChild(button);
+  });
+}
+function makeOverview(){
+  overviewGroups.innerHTML = '';
+  const groups = [];
+  slides.forEach((slide, i) => {
+    const meta = sectionForSlide(slide, i);
+    let group = groups.find(item => item.key === meta.key);
+    if(!group){ group = {...meta, items: []}; groups.push(group); }
+    group.items.push({index:i, title:slideTitle(slide, i)});
+  });
+  groups.forEach(group => {
+    const wrap = document.createElement('section');
+    wrap.className = 'overviewGroup';
+    wrap.innerHTML = `<div class="overviewGroupHeader"><div><h3>${escapeHtml(group.name)}</h3><p>${escapeHtml(group.detail)}</p></div></div><div class="overviewGrid"></div>`;
+    const grid = wrap.querySelector('.overviewGrid');
+    group.items.forEach(item => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'overviewThumb';
+      button.dataset.index = item.index;
+      button.innerHTML = `<div class="overviewMini"><div class="thumbTop"></div><div class="thumbTitle">${escapeHtml(item.title)}</div><div class="thumbLines"></div></div><div class="overviewMeta"><strong>N° ${item.index + 1}</strong><span>${escapeHtml(item.title)}</span></div>`;
+      button.addEventListener('click', () => { go(item.index); setOverview(false); });
+      grid.appendChild(button);
+    });
+    overviewGroups.appendChild(wrap);
+  });
+}
+function setThumbs(on){
+  if(on) setOverview(false);
+  document.body.classList.toggle('thumbs-open', on);
+  thumbButton.classList.toggle('active', on);
+  thumbButton.setAttribute('aria-pressed', String(on));
+}
+function setOverview(on){
+  if(on) setThumbs(false);
+  document.body.classList.toggle('overview-open', on);
+  overviewButton.classList.toggle('active', on);
+  overviewButton.setAttribute('aria-pressed', String(on));
+}
+function setLaser(on){
+  laserOn = on;
+  document.body.classList.toggle('laser-on', on);
+  laserButton.classList.toggle('active', on);
+  laserButton.setAttribute('aria-pressed', String(on));
+}
+function updateThumbs(){
+  Array.from(document.querySelectorAll('.thumb')).forEach((item, i) => item.classList.toggle('active', i === idx));
+  Array.from(document.querySelectorAll('.overviewThumb')).forEach(item => item.classList.toggle('active', Number(item.dataset.index) === idx));
+}
+function syncSlideNumbers(){
+  slides.forEach((slide, i) => {
+    const number = slide.querySelector('.slideNo');
+    if(number) number.textContent = `N° ${i + 1}`;
+  });
+}
+function go(n){
+  idx = clamp(n, 0, slides.length - 1);
+  deck.style.transform = `translateX(${-idx * 100}vw)`;
+  counter.textContent = `${idx + 1} / ${slides.length}`;
+  progress.style.width = `${((idx + 1) / slides.length) * 100}%`;
+  location.hash = idx + 1;
+  updateThumbs();
+}
+window.addEventListener('keydown', event => {
+  const key = event.key;
+  if(['ArrowRight','PageDown',' '].includes(key)){ event.preventDefault(); go(idx + 1); }
+  if(['ArrowLeft','PageUp'].includes(key)){ event.preventDefault(); go(idx - 1); }
+  if(key === 'Home') go(0);
+  if(key === 'End') go(slides.length - 1);
+  if(key.toLowerCase() === 'l') setLaser(!laserOn);
+  if(key.toLowerCase() === 'm') setThumbs(!document.body.classList.contains('thumbs-open'));
+  if(key.toLowerCase() === 'p') setOverview(!document.body.classList.contains('overview-open'));
+  if(key === 'Escape'){ setThumbs(false); setOverview(false); setLaser(false); }
+});
+window.addEventListener('mousemove', event => {
+  if(!laserOn) return;
+  laserDot.style.left = event.clientX + 'px';
+  laserDot.style.top = event.clientY + 'px';
+  const now = performance.now();
+  if(now - lastTraceAt > 28){
+    lastTraceAt = now;
+    const trace = document.createElement('div');
+    trace.className = 'laser-trace';
+    trace.style.left = event.clientX + 'px';
+    trace.style.top = event.clientY + 'px';
+    document.body.appendChild(trace);
+    setTimeout(() => trace.remove(), 900);
+  }
+});
+document.getElementById('next').onclick = () => go(idx + 1);
+document.getElementById('prev').onclick = () => go(idx - 1);
+laserButton.onclick = () => setLaser(!laserOn);
+thumbButton.onclick = () => setThumbs(!document.body.classList.contains('thumbs-open'));
+overviewButton.onclick = () => setOverview(!document.body.classList.contains('overview-open'));
+document.getElementById('thumbClose').onclick = () => setThumbs(false);
+document.getElementById('overviewClose').onclick = () => setOverview(false);
+window.addEventListener('resize', () => go(idx));
+syncSlideNumbers();
+makeThumbs();
+makeOverview();
+const start = parseInt(location.hash.replace('#',''), 10);
+if(start) idx = start - 1;
+go(idx);
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "fecha_actualizacion": "2026-06-20",
+  "entries": [
+    {
+      "archivo_origen": "01-insumos_originales/ Sesión 2.pdf",
+      "markdown_generado": "02-material_de_referencia/Sesión 2.md",
+      "formato_origen": "pdf",
+      "hash_origen": "76a23a7672be29538879966c2d6651f360bdaaec0168b4701e7e700d6b84f0b2",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Cassagne - 2002 - Derecho Administrativo.pdf",
+      "markdown_generado": "02-material_de_referencia/Cassagne - 2002 - Derecho Administrativo.md",
+      "formato_origen": "pdf",
+      "hash_origen": "fc523f8bab18868a189c38536f96df148ca84bdf5c67fb09c70210e31a365856",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Cassagne - 2022 - Derecho Administrativo 2.pdf",
+      "markdown_generado": "02-material_de_referencia/Cassagne - 2022 - Derecho Administrativo 2.md",
+      "formato_origen": "pdf",
+      "hash_origen": "3c122536521a6b5b9bf2d7ac0416c29a80db5967bd4ca8b1b1681654922fe00b",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Decreto Supremo No. 006-2026-JUS - TUO de la Ley 27444 - Ley del Procedimiento Administrativo General.pdf",
+      "markdown_generado": "02-material_de_referencia/Decreto Supremo No. 006-2026-JUS - TUO de la Ley 27444 - Ley del Procedimiento Administrativo General.md",
+      "formato_origen": "pdf",
+      "hash_origen": "aeec425fee614b861b57b15554c5d6f068a3f1c1f276451d2f147e31df2d404f",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Guzmán Napurí - 2013 - Manual del Procedimiento Administrativo General.pdf",
+      "markdown_generado": "02-material_de_referencia/Guzmán Napurí - 2013 - Manual del Procedimiento Administrativo General.md",
+      "formato_origen": "pdf",
+      "hash_origen": "78a3a1bcd45868ab7172343cbc6084ac0dd6ff3fc92297a77540e7842ebe9c58",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Morón Urbina - 2019 - Comentarios a la Ley del Procedimiento Administrativo General 2.pdf",
+      "markdown_generado": "02-material_de_referencia/Morón Urbina - 2019 - Comentarios a la Ley del Procedimiento Administrativo General 2.md",
+      "formato_origen": "pdf",
+      "hash_origen": "3fd2f5dc008359c7c5b8146b3d62f4ba3e00e680b24ea2ecf3cef26c068963de",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Morón Urbina - 2019 - Comentarios a la Ley del Procedimiento Administrativo General.pdf",
+      "markdown_generado": "02-material_de_referencia/Morón Urbina - 2019 - Comentarios a la Ley del Procedimiento Administrativo General.md",
+      "formato_origen": "pdf",
+      "hash_origen": "3d0379f8ffef26c5cacd5d6e88fe255fb12ed2c0e9f98f0cb6eda5ff5ef81266",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/Sesión 1.pdf",
+      "markdown_generado": "02-material_de_referencia/Sesión 1.md",
+      "formato_origen": "pdf",
+      "hash_origen": "72dcb6e7879c65dd7e52c724a7d30ac43ce6dceaa9826cf0735040514d28334d",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/examen_parcial.pdf",
+      "markdown_generado": "02-material_de_referencia/examen_parcial.md",
+      "formato_origen": "pdf",
+      "hash_origen": "f77edd6f55b9c0f59e295f137db81e4de0b3dcd822a4d6653a4c4dd3fbd8e6a0",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/principios_derecho_administrativo_articulo_iv_serio_reducido.html",
+      "markdown_generado": "02-material_de_referencia/principios_derecho_administrativo_articulo_iv_serio_reducido.md",
+      "formato_origen": "html",
+      "hash_origen": "d232abf99529b7111adc87bceb3b76c99bb386cebe3a3ce9faa72ae78aae9ece",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/sesion3.html",
+      "markdown_generado": "02-material_de_referencia/sesion3.md",
+      "formato_origen": "html",
+      "hash_origen": "33899935adec65018db2c2bec438e069fb87b33d5024ff4b4d6fdd2a65a05dde",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/sesion6.pdf",
+      "markdown_generado": "02-material_de_referencia/sesion6.md",
+      "formato_origen": "pdf",
+      "hash_origen": "6de5a5f295b565e6a03c3dae4ee8b05bf91d85e02d99fa0d25e051a91fc8b17a",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/sesion7.pdf",
+      "markdown_generado": "02-material_de_referencia/sesion7.md",
+      "formato_origen": "pdf",
+      "hash_origen": "941135e5b7ad676893539ede939d7c8e3ac031f2cb4971b22509a02158498f78",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/syllabus.pdf",
+      "markdown_generado": "02-material_de_referencia/syllabus.md",
+      "formato_origen": "pdf",
+      "hash_origen": "03703d25b0224ad163999ce15d690612e1179bd07d73cfe784130ac31306b693",
+      "fecha_conversion": "2026-06-20",
+      "estado": "omitido_ya_convertido",
+      "observaciones": "Ya existe conversión previa."
+    }
+  ]
+}

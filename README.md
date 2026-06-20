@@ -24,3 +24,14 @@ python3 scripts/convert_insumos_to_markdown.py
 El indice de resultados se genera en `02-material_de_referencia/README.md`.
 Cada Markdown convertido debe revisarse antes de usarse como fuente docente,
 especialmente cuando proviene de PDF.
+
+## Presentaciones generadas
+
+Las presentaciones HTML listas para revisar o dictar clase se guardan en
+`outputs/`, usando una carpeta por sesión cuando corresponda. Por ejemplo:
+
+```text
+outputs/sesion6/index.html
+```
+
+Los modelos visuales y archivos fuente se conservan en sus carpetas originales.

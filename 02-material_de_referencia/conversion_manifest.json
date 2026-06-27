@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fecha_actualizacion": "2026-06-20",
+  "fecha_actualizacion": "2026-06-27",
   "entries": [
     {
       "archivo_origen": "01-insumos_originales/ Sesión 2.pdf",
@@ -118,6 +118,15 @@
       "fecha_conversion": "2026-06-20",
       "estado": "omitido_ya_convertido",
       "observaciones": "Ya existe conversión previa."
+    },
+    {
+      "archivo_origen": "01-insumos_originales/sesion8.pdf",
+      "markdown_generado": "02-material_de_referencia/sesion8.md",
+      "formato_origen": "pdf",
+      "hash_origen": "a0df5b3634266dda9df9f0c123abb6aca3bb1f614ae218353c8e7ee35fd5ac3a",
+      "fecha_conversion": "2026-06-27",
+      "estado": "convertido",
+      "observaciones": ""
     },
     {
       "archivo_origen": "01-insumos_originales/syllabus.pdf",

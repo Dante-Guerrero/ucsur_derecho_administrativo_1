@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesion 8 - El acto administrativo</title>
+<style>
+:root{
+  --blue:#001340;
+  --blue2:#0c3277;
+  --orange:#f18a2c;
+  --ink:#111827;
+  --muted:#4b5563;
+  --light:#f6f7f9;
+  --line:#d7dce3;
+  --soft:#eef3fb;
+  --font:"Carlito","Calibri","Aptos",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#222;color:var(--ink);font-family:var(--font);overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+.deck{width:100vw;height:100vh;display:flex;transition:transform .42s ease}
+.slide{width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:#2a2a2a;position:relative}
+.canvas{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:white;position:relative;overflow:hidden;box-shadow:0 18px 55px rgba(0,0,0,.38);font-size:clamp(19px,1.46vw,32px)}
+.topbar{position:absolute;left:0;right:0;top:0;height:12%;background:var(--blue)}
+.topbar:after{content:"";position:absolute;right:0;bottom:0;width:31%;height:28%;background:var(--orange)}
+.ucsurLogo{position:absolute;left:3.8%;top:3.1%;width:12.2%;height:5.2%;object-fit:contain;z-index:8;filter:drop-shadow(0 1px 1px rgba(0,0,0,.18))}
+.waiting .ucsurLogo{left:50%;top:9%;transform:translateX(-50%);width:18%;height:8%;filter:brightness(0) invert(1) drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+.finalThanks .ucsurLogo{left:auto;right:5%;top:5%;width:15%;height:7%;filter:none}
+.headerTitle{position:absolute;right:4.5%;top:4.1%;max-width:68%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:white;font-size:1.02em;font-style:italic;text-align:right}
+.content{position:absolute;left:5%;right:5%;top:14.6%;bottom:9.7%;display:flex;flex-direction:column;gap:.82em;overflow:hidden}
+.content.narrow{left:7%;right:7%}
+h1,h2,h3,p{margin:0}
+h1{font-size:2.1em;line-height:1.07;font-weight:700}
+h2{font-size:1.42em;line-height:1.13;color:var(--blue)}
+h3{font-size:1.06em;line-height:1.14;color:var(--blue);margin-bottom:.35em}
+p{font-size:.94em;line-height:1.3}
+ul{margin:.12em 0 0 1.05em;padding:0}
+li{font-size:.98em;line-height:1.29;margin:.33em 0}
+.slideNo{position:absolute;right:3.2%;bottom:2.7%;min-width:3.1em;height:1.5em;background:var(--blue);color:white;font-size:.50em;font-weight:700;display:flex;align-items:center;justify-content:center}
+.source{margin-top:auto;color:#6b7280;font-size:.62em!important;line-height:1.22}
+.waiting .canvas{background:var(--blue)}
+.waiting .brandMark{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,0) 55%)}
+.waiting .orangeBlock{position:absolute;left:0;bottom:0;width:38%;height:7%;background:var(--orange)}
+.waiting .waitCopy{position:absolute;left:10%;right:10%;top:50%;transform:translateY(-50%);color:white;text-align:center}
+.waiting .waitCopy h1{font-size:2.45em;line-height:1.05}
+.waiting .waitCopy p{margin-top:1em;font-size:1.08em;color:#dbeafe}
+.welcomeText{position:absolute;left:39%;right:6%;top:22%;bottom:13%;display:flex;flex-direction:column;justify-content:center}
+.welcomeText h1{font-size:2.26em;line-height:1.05;color:var(--blue)}
+.welcomeText p{font-size:1.03em;line-height:1.32;margin-top:1em;color:#374151}
+.bgLeft{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,19,64,.92) 0 31%,rgba(0,19,64,.72) 31% 35%,transparent 35%),radial-gradient(circle at 18% 24%,rgba(241,138,44,.55),transparent 18%),linear-gradient(135deg,#f8fafc 0,#fff 62%,#eef3fb 100%)}
+.sectionText{position:absolute;left:38%;right:5.2%;top:31%;bottom:14%;display:flex;flex-direction:column;justify-content:center}
+.sectionText h1{font-size:1.55em;line-height:1.14;text-transform:uppercase;font-weight:500;letter-spacing:0}
+.sectionText p{font-size:.92em;margin-top:1.1em;color:#24406c}
+.sessionIntro{position:absolute;left:10%;right:10%;top:25%;bottom:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--blue)}
+.sessionIntro h1{font-size:1.88em;line-height:1.14;font-weight:600;max-width:1040px}
+.sessionIntro p{font-size:.98em;line-height:1.35;margin:1.25em auto 0;max-width:850px;color:#374151}
+.thinRule{width:160px;height:5px;background:var(--orange);border-radius:999px;margin:1.6em auto 0}
+.tiny{font-size:.66em!important;color:#24406c;margin-top:2.1em!important}
+.threeCols,.twoCols,.fourGrid,.conceptGrid,.compareGrid{display:grid;gap:1em;flex:1;min-height:0;align-items:stretch}
+.threeCols{grid-template-columns:repeat(3,minmax(0,1fr))}
+.twoCols{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fourGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.conceptGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.compareGrid{grid-template-columns:1fr .9fr}
+.card,.conceptCard,.quoteBox,.debateCard,.caseCard,.activityCard{border:1px solid var(--line);background:#fff;padding:1em 1.05em;box-shadow:0 5px 0 rgba(0,0,0,.045);min-height:0;display:flex;flex-direction:column}
+.card.blue,.blueBlock{background:var(--blue);color:#fff;border-color:var(--blue)}
+.card.blue h3,.blueBlock h2,.blueBlock h3{color:#fff}
+.card span,.conceptCard span{display:inline-block;font-size:.72em;color:var(--blue2);font-weight:700;text-transform:uppercase;margin-bottom:.42em}
+.card.blue span{color:#b7cdfa}
+.conceptCard{background:#f7f9fc}
+.conceptCard h3{font-size:1.12em}
+.conceptCard p{font-size:.94em}
+.question{font-weight:700;color:#24406c;font-size:.82em!important;margin-top:auto;border-top:1px solid var(--line);padding-top:.55em}
+.blueBlock{padding:1em 1.1em;box-shadow:0 10px 0 rgba(0,0,0,.08)}
+.centerBlock{margin:auto;max-width:84%;padding:1.35em 1.65em;text-align:center}
+.centerBlock h2{font-size:1.38em;line-height:1.16}
+.quoteBox{background:#f2f3f5;border-left:.7em solid var(--blue);position:relative}
+.quoteBox.light{background:white;border:1px solid var(--line);border-left:.7em solid var(--blue)}
+.quoteMark{font-size:3.2em;line-height:.8;color:#d8dde6;font-weight:700;position:absolute;right:.18em;bottom:.05em}
+.quoteBox p{position:relative;z-index:1;font-size:.92em;line-height:1.3}
+.noteBox,.debateBox{background:#fff7ed;border:1px solid #fed7aa;border-left:.55em solid var(--orange);padding:.65em .75em;font-size:.78em;line-height:1.24;color:#7c2d12}
+.matrix{width:100%;border-collapse:collapse;font-size:.72em;background:white}
+.matrix th{background:var(--blue);color:white;text-align:left;padding:.55em}
+.matrix td{border:1px solid #cfd5dd;padding:.52em .58em;vertical-align:top;line-height:1.22}
+.matrix tr:nth-child(even) td{background:#f3f6fa}
+.flow{display:grid;grid-template-columns:1fr .22fr 1fr .22fr 1fr;gap:.35em;align-items:center;flex:1;min-height:0}
+.flowItem{border:1px solid var(--line);background:#fff;padding:.78em .65em;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.flowItem b{font-size:1.7em;color:var(--blue);line-height:1}
+.flowItem span{font-size:.86em;font-weight:700;margin:.28em 0;color:#111827}
+.flowItem small{font-size:.78em;color:#4b5563;line-height:1.18}
+.arrow{font-size:1.45em;color:var(--orange);text-align:center;font-weight:700}
+.keyIdeas{display:grid;grid-template-columns:1fr;gap:.28em;flex:1;min-height:0}
+.keyIdea{display:grid;grid-template-columns:2.45em 1fr;gap:.52em;align-items:start;border-bottom:1px solid var(--line);padding:.26em 0 .34em}
+.keyIdea b{display:flex;align-items:center;justify-content:center;width:1.85em;height:1.85em;border-radius:50%;background:var(--blue);color:white;font-size:.66em}
+.keyIdea h3{font-size:.78em;line-height:1.12;margin:0;color:var(--blue)}
+.keyIdea p{font-size:.72em;line-height:1.22;margin:.1em 0 0}
+.caseCard{background:#f8fafc;border-left:6px solid var(--blue2)}
+.activityCard{background:#f8fafc;border-radius:0}
+.promptLead{font-size:.9em;line-height:1.28;color:#334155;margin-bottom:.35em}
+.questionTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55em;margin-top:.25em}
+.qTile{background:white;border:1px solid #dbe3ef;border-left:5px solid var(--blue2);padding:.62em .72em;box-shadow:0 5px 14px rgba(10,25,60,.055)}
+.qTile h3{font-size:.82em;margin:0 0 .28em}
+.qTile p{font-size:.78em;line-height:1.24}
+.finalThanks .canvas{background:linear-gradient(135deg,#ffffff 0%,#f7f9fc 56%,#eef3fb 100%)}
+.thanksAccent{position:absolute;left:0;top:0;bottom:0;width:2.4%;background:var(--orange)}
+.thanksWrap{position:absolute;left:12%;right:12%;top:50%;transform:translateY(-50%);text-align:left;color:var(--blue)}
+.thanksKicker{color:var(--orange);font-size:1.02em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.65em}
+.finalThanks h1{font-size:4.25em;line-height:.95;letter-spacing:0}
+.thanksRule{width:9.8em;height:.18em;margin:1.25em 0 1.15em;background:var(--orange);border-radius:999px}
+.thanksName{font-size:1.42em;font-weight:700;color:#111827;margin:.15em 0 0}
+.thanksEmail,.thanksUni{font-size:1.05em;color:#374151;margin:.28em 0 0}
+.controls{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;display:flex;gap:7px;align-items:center;background:rgba(0,0,0,.45);color:white;border-radius:999px;padding:5px 9px;font-family:Arial,sans-serif;font-size:13px;z-index:50;opacity:.18;transition:opacity .18s ease}
+.controls:hover,.controls:focus-within{opacity:1}
+.controls button{border:0;border-radius:999px;background:white;color:#111;padding:4px 8px;font-weight:700;cursor:pointer;font-size:12px}
+.controls button.active{background:var(--orange);color:white}
+.progress{position:fixed;left:0;bottom:0;height:4px;background:var(--orange);width:0;z-index:60;transition:width .3s ease}
+.laser-dot{position:fixed;width:20px;height:20px;margin-left:-10px;margin-top:-10px;border-radius:50%;background:#ff1f1f;box-shadow:0 0 0 6px rgba(255,31,31,.18),0 0 28px 10px rgba(255,31,31,.42);z-index:120;pointer-events:none;display:none}
+body.laser-on .laser-dot{display:block}
+body.laser-on .slide{cursor:none}
+.laser-trace{position:fixed;width:12px;height:12px;margin-left:-6px;margin-top:-6px;border-radius:50%;background:#ff1f1f;box-shadow:0 0 0 5px rgba(255,31,31,.16),0 0 18px 8px rgba(255,31,31,.28);pointer-events:none;z-index:119;animation:laserFade .9s ease-out forwards}
+@keyframes laserFade{0%{opacity:.78;transform:scale(1)}100%{opacity:0;transform:scale(.35)}}
+.thumbPane{position:fixed;top:0;right:0;width:min(360px,32vw);height:100vh;background:rgba(15,23,42,.96);color:white;z-index:110;transform:translateX(105%);opacity:0;pointer-events:none;transition:transform .25s ease,opacity .25s ease;box-shadow:-18px 0 40px rgba(0,0,0,.34);display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.16)}
+body.thumbs-open .thumbPane{transform:translateX(0);opacity:1;pointer-events:auto}
+.thumbHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 16px 12px;border-bottom:1px solid rgba(255,255,255,.14);font-family:Arial,sans-serif}
+.thumbHeader strong{font-size:15px}
+.thumbHeader button,.overviewHeader button{border:0;border-radius:999px;background:white;color:#111;font-weight:700;padding:5px 10px;cursor:pointer}
+.thumbList{overflow:auto;padding:12px 12px 18px;display:grid;gap:10px}
+.thumb{display:grid;grid-template-columns:116px 1fr;gap:10px;text-align:left;width:100%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:white;border-radius:12px;padding:8px;cursor:pointer}
+.thumb:hover,.thumb.active{border-color:var(--orange);background:rgba(241,138,44,.18)}
+.thumbMini,.overviewMini{aspect-ratio:16/9;background:#fff;border-radius:5px;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.thumbMini:before,.overviewMini:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f4f6fa 0 48%,#fff 48% 100%)}
+.thumbTop{position:absolute;left:0;right:0;top:0;height:19%;background:var(--blue)}
+.thumbTitle{position:absolute;left:8%;right:8%;top:28%;font:700 7px/1.08 Arial,sans-serif;color:#111;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.thumbLines{position:absolute;left:8%;right:8%;top:56%;height:26%;background:repeating-linear-gradient(to bottom,#d7dce3 0 2px,transparent 2px 7px)}
+.thumbMeta{font-family:Arial,sans-serif;display:flex;flex-direction:column;gap:3px;justify-content:center;min-width:0}
+.thumbMeta strong{font-size:12px;color:#f7b77d}
+.thumbMeta span{font-size:13px;line-height:1.22;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.overviewPane{position:fixed;inset:0;background:rgba(15,23,42,.90);backdrop-filter:blur(4px);color:white;z-index:115;opacity:0;pointer-events:none;transition:opacity .25s ease;display:flex;flex-direction:column}
+body.overview-open .overviewPane{opacity:1;pointer-events:auto}
+.overviewHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:Arial,sans-serif}
+.overviewHeader strong{display:block;font-size:17px}
+.overviewHeader small{display:block;color:rgba(255,255,255,.68);margin-top:3px}
+.overviewScroller{overflow:auto;padding:22px}
+.overviewGroups{display:grid;gap:24px}
+.overviewGroupHeader{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.overviewGroupHeader h3{margin:0;font:700 18px/1.2 Arial,sans-serif;color:white}
+.overviewGroupHeader p{margin:0;font:400 12px/1.3 Arial,sans-serif;color:rgba(255,255,255,.68)}
+.overviewGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.overviewThumb{display:flex;flex-direction:column;gap:10px;text-align:left;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:14px;padding:10px;cursor:pointer}
+.overviewThumb:hover,.overviewThumb.active{border-color:var(--orange);background:rgba(241,138,44,.12)}
+.overviewMini .thumbTitle{font:700 10px/1.1 Arial,sans-serif;left:7%;right:7%;top:28%}
+.overviewMeta span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:1.25;color:white}
+.slide .canvas{transition:box-shadow .28s ease,filter .28s ease}
+.slide.is-active .canvas{box-shadow:0 22px 62px rgba(0,0,0,.44),0 0 0 1px rgba(241,138,44,.16)}
+.slide-enter .canvas{animation:slideFocus .34s ease both}
+.slide.section-transition .canvas:after{content:"";position:absolute;left:0;right:0;top:12%;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.55;animation:sectionSweep .38s ease both;z-index:9;pointer-events:none}
+.reveal-item{opacity:0;transform:translateY(10px);transition:opacity .32s ease,transform .32s ease}
+.reveal-visible{opacity:1;transform:translateY(0)}
+@keyframes slideFocus{from{opacity:.92;filter:saturate(.94);transform:translateY(4px)}to{opacity:1;filter:saturate(1);transform:translateY(0)}}
+@keyframes sectionSweep{from{transform:translateX(-28%);opacity:0}45%{opacity:.55}to{transform:translateX(28%);opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .deck,.slide .canvas,.reveal-item,.laser-trace,.progress,.thumbPane,.overviewPane{transition:none!important;animation:none!important}
+  .reveal-item{opacity:1!important;transform:none!important}
+}
+@media (max-width:900px){.thumbPane{width:min(340px,82vw)}.overviewScroller{padding:16px}.overviewGrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}}
+@media print{body{display:block;background:white;overflow:visible}.deck{display:block;transform:none!important;width:auto;height:auto}.slide{page-break-after:always;width:100vw;height:56.25vw;background:white}.canvas{width:100vw;height:56.25vw;box-shadow:none}.controls,.progress,.thumbPane,.overviewPane,.laser-dot{display:none}}
+</style>
+</head>
+<body>
+<main class="deck">
+<section class="slide waiting" data-group="Apertura"><div class="canvas"><div class="brandMark"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="waitCopy"><h1>Derecho Administrativo 1</h1><p>Sesion 8 · La clase iniciara en breve</p></div><div class="orangeBlock"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sessionIntro"><h1>Bienvenidos de vuelta: primera sesion despues del examen parcial</h1><div class="thinRule"></div><p>Retomamos el curso pasando de fuentes y potestades administrativas a la forma juridica central de la actuacion concreta: el acto administrativo.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="welcomeText"><h1>Sesion 8: El acto administrativo</h1><p>Modulo 3 · Formas juridicas de la actuacion administrativa</p><p class="tiny">Profesor Dante Ramon Guerrero Barreto · Universidad Científica del Sur</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Reconectar el curso</div><div class="content"><div class="flow"><div class="flowItem"><b>1</b><span>Fuentes</span><small>Identifican validez, jerarquia y reglas aplicables.</small></div><div class="arrow">→</div><div class="flowItem"><b>2</b><span>Potestades</span><small>Explican que poder juridico puede ejercer la entidad.</small></div><div class="arrow">→</div><div class="flowItem"><b>3</b><span>Actos</span><small>Concretan esa potestad sobre una situacion administrativa.</small></div></div><p class="source">Fuentes: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 1, IV y V; Moron Urbina (2019).</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Objetivos de aprendizaje</div><div class="content"><div class="threeCols"><div class="card blue"><span>01</span><h3>Definir</h3><p>Explicar el acto administrativo desde la LPAG y la doctrina peruana.</p></div><div class="card"><span>02</span><h3>Distinguir</h3><p>Separarlo de actos internos, contratos, comportamientos materiales y actuacion privada.</p></div><div class="card"><span>03</span><h3>Clasificar</h3><p>Aplicar categorias de actos administrativos a ejemplos peruanos concretos.</p></div></div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1; Guzman Napuri (2013); Moron Urbina (2019).</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Mapa de la sesion</div><div class="content"><div class="threeCols"><div class="card blue"><span>Bloque I</span><h3>Concepto y elementos</h3><p>Declaracion, entidad, efectos juridicos externos, administrado y situacion concreta.</p></div><div class="card"><span>Bloque II</span><h3>Fronteras</h3><p>Actos internos, contratos, hechos materiales, actuacion privada y casos limite.</p></div><div class="card"><span>Bloque III</span><h3>Clasificacion y casos</h3><p>Categorias, ejemplos peruanos, preguntas de discusion y actividad breve.</p></div></div><p class="source">Fuentes: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444; Guzman Napuri (2013); Moron Urbina (2019).</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Concepto"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>I. Concepto y funcion</h1><p>El acto administrativo como decision publica concreta.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Concepto"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Definicion doctrinaria</div><div class="content"><div class="twoCols"><div class="quoteBox light"><div class="quoteMark">G</div><p>Decision general o especial que, en ejercicio de funcion administrativa, toma unilateralmente la autoridad y afecta derechos, deberes o intereses.</p></div><div class="card blue"><h3>Clave de lectura</h3><p>No se mira solo quien firma. Se pregunta si ejerce funcion administrativa y si produce consecuencias juridicas.</p><p class="question">Pregunta: ¿que cambia si la misma entidad actua como particular?</p></div></div><p class="source">Fuente: Guzman Napuri (2013), Manual del Procedimiento Administrativo General, p. 317.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Concepto"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Definicion legal: articulo 1</div><div class="content"><div class="quoteBox light"><div class="quoteMark">1</div><p>Son actos administrativos las declaraciones de las entidades que, en el marco de normas de derecho publico, producen efectos juridicos sobre intereses, obligaciones o derechos de los administrados dentro de una situacion concreta.</p></div><div class="noteBox"><b>Lectura para clase:</b> esta definicion contiene casi todo el test de identificacion del acto administrativo.</div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.1.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Concepto"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Seis elementos para identificarlo</div><div class="content"><div class="conceptGrid"><div class="conceptCard"><span>1</span><h3>Declaracion</h3><p>Exterioriza una decision, conocimiento u opinion con relevancia juridica.</p></div><div class="conceptCard"><span>2</span><h3>Entidad</h3><p>Proviene de una entidad que actua en funcion administrativa.</p></div><div class="conceptCard"><span>3</span><h3>Derecho publico</h3><p>Se dicta dentro de normas administrativas y potestades publicas.</p></div><div class="conceptCard"><span>4</span><h3>Efectos externos</h3><p>Impacta fuera de la organizacion interna.</p></div><div class="conceptCard"><span>5</span><h3>Administrado</h3><p>Recae sobre derechos, intereses u obligaciones.</p></div><div class="conceptCard"><span>6</span><h3>Situacion concreta</h3><p>No es una regla general abstracta.</p></div></div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.1.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Concepto"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Declaracion de una entidad</div><div class="content"><div class="twoCols"><div class="card blue"><h3>No basta un hecho</h3><p>Debe existir una exteriorizacion juridica atribuible a una entidad: resolucion, constancia, certificado, pronunciamiento o decision equivalente.</p></div><div class="card"><h3>No basta cualquier autor</h3><p>La calificacion depende de la potestad publica ejercida, no solo del organo que emite el documento.</p></div></div><div class="debateBox"><b>Ejemplo:</b> una municipalidad emite una licencia; una cuadrilla municipal pinta una vereda. Solo lo primero encaja como acto administrativo.</div><p class="source">Fuentes: Moron Urbina (2019), pp. 191-194; MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Concepto"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">La voluntad del administrado</div><div class="content"><div class="twoCols"><div class="quoteBox light"><div class="quoteMark">U</div><p>La decision se origina por conviccion de la autoridad o mandato legal; el pedido del administrado no determina por si mismo el contenido del acto.</p></div><div class="card blue"><h3>Consecuencia</h3><p>Una solicitud inicia, impulsa o provoca el procedimiento, pero la declaracion final sigue siendo unilateral.</p><p class="question">¿La licencia nace del pedido o de la decision administrativa?</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 192.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>II. Efectos, concrecion y destinatarios</h1><p>El acto administrativo mira hacia fuera y resuelve una situacion concreta.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Efectos juridicos externos</div><div class="content"><div class="threeCols"><div class="card blue"><span>Directos</span><h3>Alteran una posicion juridica</h3><p>Crean, reconocen, modifican, limitan o extinguen efectos juridicos.</p></div><div class="card"><span>Publicos</span><h3>Provienen de potestad publica</h3><p>No se explican como simple gestion privada o acuerdo contractual.</p></div><div class="card"><span>Subjetivos</span><h3>Recaen sobre sujetos</h3><p>Afectan derechos, intereses u obligaciones de administrados.</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 194.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Derechos, intereses u obligaciones</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Acto favorable</h3><p>Autoriza, reconoce, habilita o concede una posicion juridica al administrado.</p><p class="question">Ejemplo: licencia municipal de funcionamiento.</p></div><div class="card"><h3>Acto de gravamen</h3><p>Impone cargas, sanciones, prohibiciones o limitaciones juridicas.</p><p class="question">Ejemplo: multa administrativa.</p></div></div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.1; Moron Urbina (2019).</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Situacion concreta</div><div class="content"><div class="quoteBox light"><div class="quoteMark">C</div><p>La concrecion no exige siempre un destinatario individual nombrado: puede haber un numero incierto de personas dentro de una situacion administrativa determinada.</p></div><div class="threeCols"><div class="card"><h3>Concreto</h3><p>Otorgamiento de buena pro en un procedimiento de seleccion.</p></div><div class="card"><h3>Concreto plural</h3><p>Convocatoria a licitacion publica o audiencia publica.</p></div><div class="card"><h3>No concreto</h3><p>Reglamento general con vocacion normativa abstracta.</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 194.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Individualizado o individualizable</div><div class="content"><div class="flow"><div class="flowItem"><b>1</b><span>Emision</span><small>El destinatario puede estar identificado o ser identificable.</small></div><div class="arrow">→</div><div class="flowItem"><b>2</b><span>Aplicacion</span><small>La situacion concreta delimita a quienes alcanza.</small></div><div class="arrow">→</div><div class="flowItem"><b>3</b><span>Ejecucion</span><small>Al ejecutarse debe poder individualizarse suficientemente.</small></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 195.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Tipos de declaraciones</div><div class="content"><div class="threeCols"><div class="card blue"><span>Decisorias</span><h3>Voluntad administrativa</h3><p>Resolucion, acotacion tributaria, otorgamiento de licencia o sancion.</p></div><div class="card"><span>Conocimiento</span><h3>Certificacion o constatacion</h3><p>Notificacion, publicacion, partidas, inscripciones o certificaciones.</p></div><div class="card"><span>Opinion</span><h3>Juicio administrativo</h3><p>Valoracion positiva o negativa sobre un hecho comprobado administrativamente.</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 192.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Elementos"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Test rapido de identificacion</div><div class="content"><table class="matrix"><thead><tr><th>Pregunta</th><th>Si responde si</th><th>Si responde no</th></tr></thead><tbody><tr><td>¿Hay declaracion atribuible a una entidad?</td><td>Puede haber acto.</td><td>Podria ser hecho material.</td></tr><tr><td>¿Se ejerce derecho publico?</td><td>Avanza el analisis.</td><td>Podria ser actuacion privada.</td></tr><tr><td>¿Produce efectos externos?</td><td>Puede afectar administrados.</td><td>Podria ser acto interno.</td></tr><tr><td>¿Recae en situacion concreta?</td><td>Puede ser acto administrativo.</td><td>Podria ser reglamento u otra norma.</td></tr></tbody></table><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1; Moron Urbina (2019).</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>III. Fronteras y exclusiones</h1><p>No toda actuacion administrativa es acto administrativo.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Exclusiones del articulo 1</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Actos de administracion interna</h3><p>Organizan o hacen funcionar las actividades o servicios de la propia entidad.</p></div><div class="card"><h3>Comportamientos materiales</h3><p>Actividades fisicas o practicas de la Administracion que no son declaracion juridica.</p></div></div><div class="noteBox"><b>Advertencia:</b> una misma realidad puede contener documentos, actos internos, hechos materiales y actos administrativos. Hay que separar capas.</div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.2.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Acto interno vs acto administrativo</div><div class="content"><div class="compareGrid"><div class="card blue"><h3>Acto interno</h3><p>Retiene sus efectos dentro de la Administracion. Ordena organizacion, servicios, flujos de trabajo o relaciones interorganicas.</p><p class="question">Ejemplos: memorando interno, reparto de expedientes, informe de avance.</p></div><div class="card"><h3>Acto administrativo</h3><p>Dirige efectos hacia el administrado o una situacion juridica externa a la organizacion.</p><p class="question">Ejemplos: licencia, multa, denegatoria, buena pro.</p></div></div><p class="source">Fuentes: Guzman Napuri (2013), p. 342; Moron Urbina (2019), p. 251; MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.2.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Inimpugnabilidad y limites</div><div class="content"><div class="twoCols"><div class="quoteBox light"><div class="quoteMark">I</div><p>La inimpugnabilidad del acto interno se sustenta en que no afecta directa o indirectamente derechos o intereses legitimos.</p></div><div class="card blue"><h3>Limite central</h3><p>Si el supuesto acto interno afecta derechos o intereses especificos, el control no puede descartarse por la etiqueta interna.</p><p class="question">¿El nombre del documento decide su impugnabilidad?</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 253.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Caso fronterizo: sancion a servidores</div><div class="content"><div class="caseCard"><h3>Supuesto</h3><p>La entidad sanciona a un funcionario o servidor publico dentro de una relacion de servicio.</p></div><div class="threeCols"><div class="card"><h3>Vinculo interno</h3><p>La persona integra la Administracion.</p></div><div class="card blue"><h3>Derechos propios</h3><p>Puede ver afectados derechos e intereses especificos.</p></div><div class="card"><h3>Conclusion</h3><p>La doctrina citada lo trata como acto administrativo, no como simple acto de administracion.</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 253.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Contrato administrativo</div><div class="content"><div class="twoCols"><div class="card blue"><h3>No es acto administrativo</h3><p>El contrato supone acuerdo bilateral entre particular y Estado o entre entidades publicas.</p></div><div class="card"><h3>Pero puede contener actos</h3><p>Durante el procedimiento de seleccion si pueden existir actos administrativos: convocatoria, admision, otorgamiento de buena pro.</p></div></div><div class="debateBox"><b>Pregunta:</b> ¿el otorgamiento de buena pro es contrato o acto previo al contrato?</div><p class="source">Fuente: Guzman Napuri (2013), Manual del Procedimiento Administrativo General, p. 320.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Comportamientos materiales</div><div class="content"><div class="threeCols"><div class="card blue"><span>Hecho</span><h3>Actividad fisica</h3><p>Clausurar materialmente un local, retirar objetos, ejecutar una obra o inspeccionar.</p></div><div class="card"><span>Acto</span><h3>Declaracion juridica</h3><p>Resolucion que ordena clausura, sancion, autorizacion o medida correctiva.</p></div><div class="card"><span>Control</span><h3>Capas distintas</h3><p>El hecho puede ser consecuencia de un acto o puede requerir control propio.</p></div></div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.2.2; Guzman Napuri (2013), p. 320.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Exclusiones"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Actuacion de derecho privado</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Administracion como poder publico</h3><p>Actua con prerrogativas, competencia administrativa y normas de derecho publico.</p></div><div class="card"><h3>Administracion como particular</h3><p>Puede realizar actos bajo derecho privado; esa actuacion no se convierte automaticamente en acto administrativo.</p></div></div><div class="noteBox"><b>Regla practica:</b> revisar la potestad ejercida y el regimen juridico aplicable antes de clasificar.</div><p class="source">Fuente: Guzman Napuri (2013), Manual del Procedimiento Administrativo General, p. 320; Moron Urbina (2019), p. 194.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>IV. Clasificacion de actos administrativos</h1><p>Las categorias ordenan efectos, control e impugnacion.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Segun destinatarios</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Individuales</h3><p>Dirigidos a uno o varios destinatarios determinados o determinables.</p><p class="question">Ejemplo: resolucion de multa a una empresa.</p></div><div class="card"><h3>Generales</h3><p>Interesan a una pluralidad identificada o identificable, sin convertirse por ello en reglamento.</p><p class="question">Ejemplo: convocatoria a licitacion publica.</p></div></div><p class="source">Fuente: Moron Urbina (2019), Comentarios a la Ley del Procedimiento Administrativo General, p. 199.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Segun contenido procedimental</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Terminales</h3><p>Ponen fin al asunto administrativo o deciden el fondo.</p></div><div class="card"><h3>De tramite</h3><p>Preparan, impulsan u ordenan el procedimiento sin decidir el fondo.</p></div><div class="card"><h3>De mero tramite interno</h3><p>Impulsan gestiones internas y no implican decision de fondo.</p></div></div><p class="source">Fuentes: Moron Urbina (2019), p. 200; Guzman Napuri (2013), p. 343.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Segun carga o beneficio</div><div class="content"><div class="threeCols"><div class="card blue"><span>Favorables</span><h3>Amplian esfera juridica</h3><p>Autorizacion, licencia, reconocimiento, inscripcion o beneficio.</p></div><div class="card"><span>Gravamen</span><h3>Restringen o imponen</h3><p>Multa, clausura, denegatoria con carga, medida correctiva.</p></div><div class="card"><span>Denegatorios</span><h3>Rechazan una pretension</h3><p>No conceden lo pedido y pueden activar impugnacion.</p></div></div><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Personales y reales</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Personales</h3><p>La situacion juridica se vincula especialmente con condiciones del sujeto.</p><p class="question">Ejemplo: sancion a un administrado por una conducta propia.</p></div><div class="card"><h3>Reales</h3><p>La decision se vincula con una cosa, bien, actividad o establecimiento.</p><p class="question">Ejemplo: autorizacion o clausura de un local.</p></div></div><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Segun exteriorizacion</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Expresos</h3><p>Constan en una declaracion formal identificable.</p></div><div class="card"><h3>Tacitos</h3><p>Se infieren de una conducta administrativa con valor juridico.</p></div><div class="card"><h3>Implicitos</h3><p>Derivan necesariamente de una decision o actuacion principal.</p></div></div><div class="debateBox"><b>Pregunta:</b> ¿que riesgos de prueba y motivacion aparecen cuando no hay declaracion expresa?</div><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Segun impugnabilidad</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Impugnables</h3><p>Permiten recurso administrativo porque afectan una posicion juridica y no han quedado firmes.</p></div><div class="card"><h3>Consentidos</h3><p>No fueron impugnados dentro del plazo aplicable.</p></div><div class="card"><h3>Firmes</h3><p>Ya no pueden ser discutidos ordinariamente en sede administrativa.</p></div></div><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, regimen de recursos administrativos; Guzman Napuri (2013).</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Constitutivos y declarativos</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Constitutivos</h3><p>Crean, modifican o extinguen una situacion juridica.</p><p class="question">Ejemplo: otorgamiento de licencia.</p></div><div class="card"><h3>Declarativos</h3><p>Reconocen o constatan una situacion juridica preexistente.</p><p class="question">Ejemplo: certificacion administrativa.</p></div></div><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Segun funcionalidad procedimental</div><div class="content"><table class="matrix"><thead><tr><th>Tipo</th><th>Funcion</th><th>Ejemplo didactico</th></tr></thead><tbody><tr><td>Incoacion</td><td>Inicia el procedimiento.</td><td>Inicio de procedimiento sancionador.</td></tr><tr><td>Instruccion</td><td>Recaba informacion y prueba.</td><td>Requerimiento de informe tecnico.</td></tr><tr><td>Ordenacion</td><td>Organiza el tramite.</td><td>Programacion de diligencia.</td></tr><tr><td>Intimacion</td><td>Exige cumplimiento.</td><td>Requerimiento de subsanacion.</td></tr><tr><td>Resolucion y ejecucion</td><td>Decide y hace cumplir.</td><td>Multa y cobranza.</td></tr></tbody></table><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Forma de produccion y organos</div><div class="content"><div class="fourGrid"><div class="card blue"><h3>Individuales</h3><p>Se producen caso por caso.</p></div><div class="card"><h3>En masa</h3><p>Se emiten para multiples situaciones repetidas.</p></div><div class="card"><h3>Simples</h3><p>Interviene un solo organo en la decision.</p></div><div class="card"><h3>Complejos</h3><p>Requieren concurrencia de varios organos o voluntades administrativas.</p></div></div><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Clasificacion"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Originarios y confirmatorios</div><div class="content"><div class="twoCols"><div class="card blue"><h3>Originarios</h3><p>Introducen por primera vez una decision administrativa sobre la situacion.</p></div><div class="card"><h3>Confirmatorios</h3><p>Reiteran, mantienen o confirman una decision administrativa previa.</p></div></div><div class="noteBox"><b>Uso practico:</b> la clasificacion importa para determinar si existe nuevo plazo de impugnacion o solo reiteracion de una decision anterior.</div><p class="source">Fuente: Guzman Napuri (2013); Moron Urbina (2019). Fuente pendiente de verificacion para clasificacion comparada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>V. Casos y actividad</h1><p>Clasificar exige justificar elemento, efecto y frontera.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Casos peruanos: primera ronda</div><div class="content"><table class="matrix"><thead><tr><th>Supuesto</th><th>Clasificacion probable</th><th>Razon</th></tr></thead><tbody><tr><td>Licencia municipal</td><td>Acto favorable, constitutivo, expreso.</td><td>Habilita una actividad concreta del administrado.</td></tr><tr><td>Multa administrativa</td><td>Acto de gravamen, terminal, impugnable.</td><td>Impone una consecuencia juridica desfavorable.</td></tr><tr><td>Otorgamiento de buena pro</td><td>Acto administrativo dentro de seleccion.</td><td>Define una situacion concreta antes del contrato.</td></tr></tbody></table><p class="source">Fuentes: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444; Guzman Napuri (2013), p. 320; ejemplos didacticos sin expediente especifico.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Casos peruanos: frontera</div><div class="content"><table class="matrix"><thead><tr><th>Supuesto</th><th>¿Acto administrativo?</th><th>Criterio de decision</th></tr></thead><tbody><tr><td>Convocatoria a licitacion publica</td><td>Puede ser acto general concreto.</td><td>Interesa a pluralidad identificable dentro de un procedimiento.</td></tr><tr><td>Memorando interno</td><td>Normalmente no.</td><td>Organiza la entidad y no afecta administrados.</td></tr><tr><td>Informe tecnico</td><td>Normalmente no.</td><td>Prepara o sustenta, pero no decide por si mismo.</td></tr><tr><td>Resolucion sancionadora a servidor</td><td>Si puede serlo.</td><td>Afecta derechos o intereses especificos del servidor.</td></tr></tbody></table><p class="source">Fuentes: Moron Urbina (2019), pp. 199, 251 y 253; Guzman Napuri (2013), pp. 342-343.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Preguntas de discusion</div><div class="content"><p class="promptLead">Respondan con una conclusion y el elemento de la definicion que la sostiene.</p><div class="questionTiles"><div class="qTile"><h3>1. Etiqueta</h3><p>¿Una resolucion siempre es acto administrativo?</p></div><div class="qTile"><h3>2. Efectos</h3><p>¿Puede haber acto administrativo sin efecto externo?</p></div><div class="qTile"><h3>3. Contratos</h3><p>¿Donde termina el acto precontractual y empieza el contrato?</p></div><div class="qTile"><h3>4. Servidores</h3><p>¿Por que una sancion a servidor no es simple organizacion interna?</p></div></div><div class="debateBox"><b>Regla:</b> no clasificar por intuicion. Usar declaracion, potestad, efecto externo y situacion concreta.</div></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Mini actividad: matriz de clasificacion</div><div class="content"><table class="matrix"><thead><tr><th>Paso</th><th>Pregunta</th><th>Producto esperado</th></tr></thead><tbody><tr><td>1</td><td>¿Cual es la declaracion?</td><td>Documento, pronunciamiento o decision identificada.</td></tr><tr><td>2</td><td>¿Quien actua y con que potestad?</td><td>Entidad, competencia y regimen de derecho publico.</td></tr><tr><td>3</td><td>¿Que efecto produce?</td><td>Derecho, interes u obligacion afectada.</td></tr><tr><td>4</td><td>¿Es interno, material, contractual o privado?</td><td>Descartar exclusiones.</td></tr><tr><td>5</td><td>¿Como se clasifica?</td><td>Dos o tres categorias con justificacion.</td></tr></tbody></table><p class="source">Fuente: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1; actividad didactica.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Cierre"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Cierre: 5 ideas clave</div><div class="content"><div class="keyIdeas"><div class="keyIdea"><b>1</b><div><h3>El acto administrativo concreta potestad publica</h3><p>No basta que intervenga una entidad; importa la funcion administrativa ejercida.</p></div></div><div class="keyIdea"><b>2</b><div><h3>La definicion legal funciona como test</h3><p>Declaracion, entidad, derecho publico, efectos externos, administrado y situacion concreta.</p></div></div><div class="keyIdea"><b>3</b><div><h3>No toda actuacion publica es acto administrativo</h3><p>Actos internos, hechos materiales, contratos y actuacion privada deben distinguirse.</p></div></div><div class="keyIdea"><b>4</b><div><h3>Los casos limite se resuelven por efectos</h3><p>Si hay afectacion de derechos o intereses especificos, la etiqueta interna pierde fuerza.</p></div></div><div class="keyIdea"><b>5</b><div><h3>Clasificar ayuda a controlar</h3><p>La categoria incide en motivacion, impugnacion, firmeza, ejecucion y garantias.</p></div></div></div><p class="source">Fuentes: MINJUSDH, D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1; Guzman Napuri (2013); Moron Urbina (2019).</p></div><div class="slideNo"></div></div></section>
+<section class="slide finalThanks" data-group="Cierre"><div class="canvas"><div class="thanksAccent"></div><img class="ucsurLogo" src="../../assets/Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="thanksWrap"><p class="thanksKicker">Derecho Administrativo 1</p><h1>Gracias</h1><div class="thanksRule"></div><p class="thanksName">Profesor Dante Guerrero</p><p class="thanksEmail">dguerrerob@cientifica.edu.pe</p><p class="thanksUni">Universidad Científica del Sur</p></div><div class="slideNo"></div></div></section>
+</main>
+<div class="controls"><button id="prev" title="Anterior">←</button><span id="counter"></span><button id="next" title="Siguiente">→</button><button id="laser" title="Activar puntero laser">Laser</button><button id="thumbToggle" title="Ver miniaturas laterales">Miniaturas</button><button id="overviewToggle" title="Ver vista general por secciones">Vista general</button></div>
+<aside aria-label="Navegador de miniaturas" class="thumbPane"><div class="thumbHeader"><strong>Vista de miniaturas</strong><button id="thumbClose">Cerrar</button></div><div class="thumbList"></div></aside>
+<section aria-label="Vista general por secciones" class="overviewPane"><div class="overviewHeader"><div><strong>Vista general por secciones</strong><small>Miniaturas agrupadas por bloques tematicos</small></div><button id="overviewClose">Cerrar</button></div><div class="overviewScroller"><div class="overviewGroups"></div></div></section>
+<div aria-hidden="true" class="laser-dot"></div>
+<div class="progress"></div>
+<script>
+const deck=document.querySelector('.deck');
+const slides=Array.from(document.querySelectorAll('.slide'));
+const counter=document.getElementById('counter');
+const progress=document.querySelector('.progress');
+const laserButton=document.getElementById('laser');
+const thumbButton=document.getElementById('thumbToggle');
+const overviewButton=document.getElementById('overviewToggle');
+const thumbList=document.querySelector('.thumbList');
+const overviewGroups=document.querySelector('.overviewGroups');
+const laserDot=document.querySelector('.laser-dot');
+let idx=0;
+let laserOn=false;
+let lastTraceAt=0;
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+function slideTitle(slide,i){return slide.querySelector('.headerTitle')?.textContent.trim()||slide.querySelector('.welcomeText h1, .sectionText h1, h1, h2, h3')?.textContent.trim()||`Diapositiva ${i+1}`;}
+function escapeHtml(text){return text.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+function sectionForSlide(slide){
+  const group=slide.dataset.group||'Contenido';
+  const details={
+    'Apertura':'Contexto, objetivos y ruta de clase',
+    'Concepto':'Definicion doctrinaria y legal del acto',
+    'Elementos':'Efectos juridicos, concrecion y declaraciones',
+    'Exclusiones':'Actos internos, contratos, hechos y fronteras',
+    'Clasificacion':'Categorias para ordenar efectos y control',
+    'Casos y actividad':'Ejemplos peruanos y trabajo aplicado',
+    'Cierre':'Sintesis y agradecimiento'
+  };
+  return {key:group.toLowerCase().replace(/\s+/g,'-'),name:group,detail:details[group]||''};
+}
+function thumbPreview(title){return `<div class="thumbMini"><div class="thumbTop"></div><div class="thumbTitle">${escapeHtml(title)}</div><div class="thumbLines"></div></div>`;}
+function makeThumbs(){
+  thumbList.innerHTML='';
+  slides.forEach((slide,i)=>{
+    const button=document.createElement('button');
+    const title=slideTitle(slide,i);
+    button.type='button';
+    button.className='thumb';
+    button.innerHTML=`${thumbPreview(title)}<div class="thumbMeta"><strong>N° ${i+1}</strong><span>${escapeHtml(title)}</span></div>`;
+    button.addEventListener('click',()=>{go(i);setThumbs(false);});
+    thumbList.appendChild(button);
+  });
+}
+function makeOverview(){
+  overviewGroups.innerHTML='';
+  const groups=[];
+  slides.forEach((slide,i)=>{
+    const meta=sectionForSlide(slide);
+    let group=groups.find(item=>item.key===meta.key);
+    if(!group){group={...meta,items:[]};groups.push(group);}
+    group.items.push({index:i,title:slideTitle(slide,i)});
+  });
+  groups.forEach(group=>{
+    const wrap=document.createElement('section');
+    wrap.className='overviewGroup';
+    wrap.innerHTML=`<div class="overviewGroupHeader"><div><h3>${escapeHtml(group.name)}</h3><p>${escapeHtml(group.detail)}</p></div></div><div class="overviewGrid"></div>`;
+    const grid=wrap.querySelector('.overviewGrid');
+    group.items.forEach(item=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='overviewThumb';
+      button.dataset.index=item.index;
+      button.innerHTML=`<div class="overviewMini"><div class="thumbTop"></div><div class="thumbTitle">${escapeHtml(item.title)}</div><div class="thumbLines"></div></div><div class="overviewMeta"><strong>N° ${item.index+1}</strong><span>${escapeHtml(item.title)}</span></div>`;
+      button.addEventListener('click',()=>{go(item.index);setOverview(false);});
+      grid.appendChild(button);
+    });
+    overviewGroups.appendChild(wrap);
+  });
+}
+function setThumbs(on){if(on)setOverview(false);document.body.classList.toggle('thumbs-open',on);thumbButton.classList.toggle('active',on);thumbButton.setAttribute('aria-pressed',String(on));}
+function setOverview(on){if(on)setThumbs(false);document.body.classList.toggle('overview-open',on);overviewButton.classList.toggle('active',on);overviewButton.setAttribute('aria-pressed',String(on));}
+function setLaser(on){laserOn=on;document.body.classList.toggle('laser-on',on);laserButton.classList.toggle('active',on);laserButton.setAttribute('aria-pressed',String(on));}
+function updateThumbs(){
+  Array.from(document.querySelectorAll('.thumb')).forEach((item,i)=>item.classList.toggle('active',i===idx));
+  Array.from(document.querySelectorAll('.overviewThumb')).forEach(item=>item.classList.toggle('active',Number(item.dataset.index)===idx));
+}
+function syncSlideNumbers(){
+  slides.forEach((slide,i)=>{const number=slide.querySelector('.slideNo');if(number)number.textContent=`N° ${i+1}`;});
+}
+const motionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
+const revealSelector='.card,.conceptCard,.quoteBox,.blueBlock,.noteBox,.debateBox,.debateCard,.caseCard,.activityCard,.flowItem,.qTile,.keyIdea,.matrix,.promptLead,.welcomeText,.sessionIntro,.sectionText';
+let revealTimer=0;
+function prepareRevealItems(){slides.forEach(slide=>{slide.querySelectorAll(revealSelector).forEach(item=>item.classList.add('reveal-item'));});}
+function revealSlide(slide,previousIdx=idx){
+  window.clearTimeout(revealTimer);
+  slides.forEach(item=>item.classList.remove('is-active','slide-enter','section-transition'));
+  slide.classList.add('is-active');
+  if(motionQuery.matches){slide.querySelectorAll('.reveal-item').forEach(item=>item.classList.add('reveal-visible'));return;}
+  slide.classList.add('slide-enter');
+  const previousGroup=slides[previousIdx]?.dataset.group;
+  const currentGroup=slide.dataset.group;
+  if(previousIdx!==idx&&previousGroup&&previousGroup!==currentGroup)slide.classList.add('section-transition');
+  const items=Array.from(slide.querySelectorAll('.reveal-item'));
+  items.forEach(item=>item.classList.remove('reveal-visible'));
+  items.forEach((item,i)=>{item.style.transitionDelay=`${Math.min(i*45,270)}ms`;requestAnimationFrame(()=>item.classList.add('reveal-visible'));});
+  revealTimer=window.setTimeout(()=>{slide.classList.remove('slide-enter','section-transition');items.forEach(item=>{item.style.transitionDelay='';});},520);
+}
+motionQuery.addEventListener?.('change',()=>revealSlide(slides[idx]));
+function go(n){
+  const previousIdx=idx;
+  idx=clamp(n,0,slides.length-1);
+  deck.style.transform=`translateX(${-idx*100}vw)`;
+  counter.textContent=`${idx+1} / ${slides.length}`;
+  progress.style.width=`${((idx+1)/slides.length)*100}%`;
+  location.hash=idx+1;
+  updateThumbs();
+  revealSlide(slides[idx],previousIdx);
+}
+window.addEventListener('keydown',event=>{
+  const key=event.key;
+  if(['ArrowRight','PageDown',' '].includes(key)){event.preventDefault();go(idx+1);}
+  if(['ArrowLeft','PageUp'].includes(key)){event.preventDefault();go(idx-1);}
+  if(key==='Home')go(0);
+  if(key==='End')go(slides.length-1);
+  if(key.toLowerCase()==='l')setLaser(!laserOn);
+  if(key.toLowerCase()==='m')setThumbs(!document.body.classList.contains('thumbs-open'));
+  if(key.toLowerCase()==='p')setOverview(!document.body.classList.contains('overview-open'));
+  if(key==='Escape'){setThumbs(false);setOverview(false);setLaser(false);}
+});
+window.addEventListener('mousemove',event=>{
+  if(!laserOn)return;
+  laserDot.style.left=event.clientX+'px';
+  laserDot.style.top=event.clientY+'px';
+  const now=performance.now();
+  if(now-lastTraceAt>28){
+    lastTraceAt=now;
+    const trace=document.createElement('div');
+    trace.className='laser-trace';
+    trace.style.left=event.clientX+'px';
+    trace.style.top=event.clientY+'px';
+    document.body.appendChild(trace);
+    setTimeout(()=>trace.remove(),900);
+  }
+});
+document.getElementById('next').onclick=()=>go(idx+1);
+document.getElementById('prev').onclick=()=>go(idx-1);
+laserButton.onclick=()=>setLaser(!laserOn);
+thumbButton.onclick=()=>setThumbs(!document.body.classList.contains('thumbs-open'));
+overviewButton.onclick=()=>setOverview(!document.body.classList.contains('overview-open'));
+document.getElementById('thumbClose').onclick=()=>setThumbs(false);
+document.getElementById('overviewClose').onclick=()=>setOverview(false);
+window.addEventListener('resize',()=>go(idx));
+prepareRevealItems();
+syncSlideNumbers();
+makeThumbs();
+makeOverview();
+const start=parseInt(location.hash.replace('#',''),10);
+if(start)idx=start-1;
+go(idx);
+</script>
+</body>
+</html>

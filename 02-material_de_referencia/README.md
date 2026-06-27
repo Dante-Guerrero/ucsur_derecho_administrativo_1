@@ -1,15 +1,15 @@
 # Índice de conversión
 
-Fecha de conversión: 2026-06-20
+Fecha de conversión: 2026-06-27
 
 Directorio de origen: `01-insumos_originales`
 Directorio de salida: `02-material_de_referencia`
 
 ## Resumen
 
-- Archivos detectados: 14
+- Archivos detectados: 15
 - Ya convertidos: 14
-- Nuevos convertidos: 0
+- Nuevos convertidos: 1
 - Omitidos por formato no soportado: 0
 - Archivos con error: 0
 
@@ -30,4 +30,5 @@ Directorio de salida: `02-material_de_referencia`
 | `01-insumos_originales/sesion3.html` | `02-material_de_referencia/sesion3.md` | html | 33899935adec | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion6.pdf` | `02-material_de_referencia/sesion6.md` | pdf | 6de5a5f295b5 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion7.pdf` | `02-material_de_referencia/sesion7.md` | pdf | 941135e5b7ad | omitido_ya_convertido | Ya existe conversión previa. |
+| `01-insumos_originales/sesion8.pdf` | `02-material_de_referencia/sesion8.md` | pdf | a0df5b363426 | convertido |  |
 | `01-insumos_originales/syllabus.pdf` | `02-material_de_referencia/syllabus.md` | pdf | 03703d25b022 | omitido_ya_convertido | Ya existe conversión previa. |

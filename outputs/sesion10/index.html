@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 10 - Validez y eficacia del acto administrativo</title>
+<style>
+:root{
+  --blue:#001340;
+  --blue2:#0c3277;
+  --orange:#f18a2c;
+  --ink:#111827;
+  --muted:#4b5563;
+  --light:#f6f7f9;
+  --line:#d7dce3;
+  --soft:#eef3fb;
+  --font:"Carlito","Calibri","Aptos",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#222;color:var(--ink);font-family:var(--font);overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+.deck{width:100vw;height:100vh;display:flex;transition:transform .42s ease}
+.slide{width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:#2a2a2a;position:relative}
+.canvas{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:white;position:relative;overflow:hidden;box-shadow:0 18px 55px rgba(0,0,0,.38);font-size:clamp(19px,1.46vw,32px)}
+.topbar{position:absolute;left:0;right:0;top:0;height:12%;background:var(--blue)}
+.topbar:after{content:"";position:absolute;right:0;bottom:0;width:31%;height:28%;background:var(--orange)}
+.ucsurLogo{position:absolute;left:3.8%;top:3.1%;width:12.2%;height:5.2%;object-fit:contain;z-index:8;filter:drop-shadow(0 1px 1px rgba(0,0,0,.18))}
+.waiting .ucsurLogo{left:50%;top:9%;transform:translateX(-50%);width:18%;height:8%;filter:brightness(0) invert(1) drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+.finalThanks .ucsurLogo{left:auto;right:5%;top:5%;width:15%;height:7%;filter:none}
+.headerTitle{position:absolute;right:4.5%;top:4.1%;max-width:68%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:white;font-size:1.02em;font-style:italic;text-align:right}
+.content{position:absolute;left:5%;right:5%;top:14.6%;bottom:9.7%;display:flex;flex-direction:column;gap:.82em;overflow:hidden}
+.content.narrow{left:7%;right:7%}
+h1,h2,h3,p{margin:0}
+h1{font-size:2.1em;line-height:1.07;font-weight:700}
+h2{font-size:1.42em;line-height:1.13;color:var(--blue)}
+h3{font-size:1.06em;line-height:1.14;color:var(--blue);margin-bottom:.35em}
+p{font-size:.94em;line-height:1.3}
+ul{margin:.12em 0 0 1.05em;padding:0}
+li{font-size:.98em;line-height:1.29;margin:.33em 0}
+.slideNo{position:absolute;right:3.2%;bottom:2.7%;min-width:3.1em;height:1.5em;background:var(--blue);color:white;font-size:.50em;font-weight:700;display:flex;align-items:center;justify-content:center}
+.source{margin-top:auto;color:#6b7280;font-size:.62em!important;line-height:1.22}
+.waiting .canvas{background:var(--blue)}
+.waiting .brandMark{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,0) 55%)}
+.waiting .orangeBlock{position:absolute;left:0;bottom:0;width:38%;height:7%;background:var(--orange)}
+.waiting .waitCopy{position:absolute;left:10%;right:10%;top:50%;transform:translateY(-50%);color:white;text-align:center}
+.waiting .waitCopy h1{font-size:2.45em;line-height:1.05}
+.waiting .waitCopy p{margin-top:1em;font-size:1.08em;color:#dbeafe}
+.welcomeText{position:absolute;left:39%;right:6%;top:22%;bottom:13%;display:flex;flex-direction:column;justify-content:center}
+.welcomeText h1{font-size:2.26em;line-height:1.05;color:var(--blue)}
+.welcomeText p{font-size:1.03em;line-height:1.32;margin-top:1em;color:#374151}
+.bgLeft{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,19,64,.92) 0 31%,rgba(0,19,64,.72) 31% 35%,transparent 35%),radial-gradient(circle at 18% 24%,rgba(241,138,44,.55),transparent 18%),linear-gradient(135deg,#f8fafc 0,#fff 62%,#eef3fb 100%)}
+.sectionText{position:absolute;left:38%;right:5.2%;top:31%;bottom:14%;display:flex;flex-direction:column;justify-content:center}
+.sectionText h1{font-size:1.55em;line-height:1.14;text-transform:uppercase;font-weight:500;letter-spacing:0}
+.sectionText p{font-size:.92em;margin-top:1.1em;color:#24406c}
+.sessionIntro{position:absolute;left:10%;right:10%;top:25%;bottom:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--blue)}
+.sessionIntro h1{font-size:1.88em;line-height:1.14;font-weight:600;max-width:1040px}
+.sessionIntro p{font-size:.98em;line-height:1.35;margin:1.25em auto 0;max-width:850px;color:#374151}
+.thinRule{width:160px;height:5px;background:var(--orange);border-radius:999px;margin:1.6em auto 0}
+.tiny{font-size:.66em!important;color:#24406c;margin-top:2.1em!important}
+.threeCols,.twoCols,.fourGrid,.conceptGrid,.compareGrid{display:grid;gap:1em;flex:1;min-height:0;align-items:stretch}
+.threeCols{grid-template-columns:repeat(3,minmax(0,1fr))}
+.twoCols{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fourGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.conceptGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.compareGrid{grid-template-columns:1fr .9fr}
+.card,.conceptCard,.quoteBox,.debateCard,.caseCard,.activityCard{border:1px solid var(--line);background:#fff;padding:1em 1.05em;box-shadow:0 5px 0 rgba(0,0,0,.045);min-height:0;display:flex;flex-direction:column}
+.card.blue,.blueBlock{background:var(--blue);color:#fff;border-color:var(--blue)}
+.card.blue h3,.blueBlock h2,.blueBlock h3{color:#fff}
+.card span,.conceptCard span{display:inline-block;font-size:.72em;color:var(--blue2);font-weight:700;text-transform:uppercase;margin-bottom:.42em}
+.card.blue span{color:#b7cdfa}
+.conceptCard{background:#f7f9fc}
+.conceptCard h3{font-size:1.12em}
+.conceptCard p{font-size:.94em}
+.question{font-weight:700;color:#24406c;font-size:.82em!important;margin-top:auto;border-top:1px solid var(--line);padding-top:.55em}
+.blueBlock{padding:1em 1.1em;box-shadow:0 10px 0 rgba(0,0,0,.08)}
+.centerBlock{margin:auto;max-width:84%;padding:1.35em 1.65em;text-align:center}
+.centerBlock h2{font-size:1.38em;line-height:1.16}
+.quoteBox{background:#f2f3f5;border-left:.7em solid var(--blue);position:relative}
+.quoteBox.light{background:white;border:1px solid var(--line);border-left:.7em solid var(--blue)}
+.quoteMark{font-size:3.2em;line-height:.8;color:#d8dde6;font-weight:700;position:absolute;right:.18em;bottom:.05em}
+.quoteBox p{position:relative;z-index:1;font-size:.92em;line-height:1.3}
+.noteBox,.debateBox{background:#fff7ed;border:1px solid #fed7aa;border-left:.55em solid var(--orange);padding:.65em .75em;font-size:.78em;line-height:1.24;color:#7c2d12}
+.matrix{width:100%;border-collapse:collapse;font-size:.72em;background:white}
+.matrix th{background:var(--blue);color:white;text-align:left;padding:.55em}
+.matrix td{border:1px solid #cfd5dd;padding:.52em .58em;vertical-align:top;line-height:1.22}
+.matrix tr:nth-child(even) td{background:#f3f6fa}
+.flow{display:grid;grid-template-columns:1fr .22fr 1fr .22fr 1fr;gap:.35em;align-items:center;flex:1;min-height:0}
+.flowItem{border:1px solid var(--line);background:#fff;padding:.78em .65em;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.flowItem b{font-size:1.7em;color:var(--blue);line-height:1}
+.flowItem span{font-size:.86em;font-weight:700;margin:.28em 0;color:#111827}
+.flowItem small{font-size:.78em;color:#4b5563;line-height:1.18}
+.arrow{font-size:1.45em;color:var(--orange);text-align:center;font-weight:700}
+.keyIdeas{display:grid;grid-template-columns:1fr;gap:.28em;flex:1;min-height:0}
+.keyIdea{display:grid;grid-template-columns:2.45em 1fr;gap:.52em;align-items:start;border-bottom:1px solid var(--line);padding:.26em 0 .34em}
+.keyIdea b{display:flex;align-items:center;justify-content:center;width:1.85em;height:1.85em;border-radius:50%;background:var(--blue);color:white;font-size:.66em}
+.keyIdea h3{font-size:.78em;line-height:1.12;margin:0;color:var(--blue)}
+.keyIdea p{font-size:.72em;line-height:1.22;margin:.1em 0 0}
+.caseCard{background:#f8fafc;border-left:6px solid var(--blue2)}
+.activityCard{background:#f8fafc;border-radius:0}
+.promptLead{font-size:.9em;line-height:1.28;color:#334155;margin-bottom:.35em}
+.questionTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55em;margin-top:.25em}
+.qTile{background:white;border:1px solid #dbe3ef;border-left:5px solid var(--blue2);padding:.62em .72em;box-shadow:0 5px 14px rgba(10,25,60,.055)}
+.qTile h3{font-size:.82em;margin:0 0 .28em}
+.qTile p{font-size:.78em;line-height:1.24}
+.finalThanks .canvas{background:linear-gradient(135deg,#ffffff 0%,#f7f9fc 56%,#eef3fb 100%)}
+.thanksAccent{position:absolute;left:0;top:0;bottom:0;width:2.4%;background:var(--orange)}
+.thanksWrap{position:absolute;left:12%;right:12%;top:50%;transform:translateY(-50%);text-align:left;color:var(--blue)}
+.thanksKicker{color:var(--orange);font-size:1.02em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.65em}
+.finalThanks h1{font-size:4.25em;line-height:.95;letter-spacing:0}
+.thanksRule{width:9.8em;height:.18em;margin:1.25em 0 1.15em;background:var(--orange);border-radius:999px}
+.thanksName{font-size:1.42em;font-weight:700;color:#111827;margin:.15em 0 0}
+.thanksEmail,.thanksUni{font-size:1.05em;color:#374151;margin:.28em 0 0}
+.controls{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;display:flex;gap:7px;align-items:center;background:rgba(0,0,0,.45);color:white;border-radius:999px;padding:5px 9px;font-family:Arial,sans-serif;font-size:13px;z-index:50;opacity:.18;transition:opacity .18s ease}
+.controls:hover,.controls:focus-within{opacity:1}
+.controls button{border:0;border-radius:999px;background:white;color:#111;padding:4px 8px;font-weight:700;cursor:pointer;font-size:12px}
+.controls button.active{background:var(--orange);color:white}
+.progress{position:fixed;left:0;bottom:0;height:4px;background:var(--orange);width:0;z-index:60;transition:width .3s ease}
+.láser-dot{position:fixed;width:20px;height:20px;margin-left:-10px;margin-top:-10px;border-radius:50%;background:#ff1f1f;box-shadow:0 0 0 6px rgba(255,31,31,.18),0 0 28px 10px rgba(255,31,31,.42);z-index:120;pointer-events:none;display:none}
+body.láser-on .láser-dot{display:block}
+body.láser-on .slide{cursor:none}
+.láser-trace{position:fixed;width:12px;height:12px;margin-left:-6px;margin-top:-6px;border-radius:50%;background:#ff1f1f;box-shadow:0 0 0 5px rgba(255,31,31,.16),0 0 18px 8px rgba(255,31,31,.28);pointer-events:none;z-index:119;animation:láserFade .9s ease-out forwards}
+@keyframes láserFade{0%{opacity:.78;transform:scale(1)}100%{opacity:0;transform:scale(.35)}}
+.thumbPane{position:fixed;top:0;right:0;width:min(360px,32vw);height:100vh;background:rgba(15,23,42,.96);color:white;z-index:110;transform:translateX(105%);opacity:0;pointer-events:none;transition:transform .25s ease,opacity .25s ease;box-shadow:-18px 0 40px rgba(0,0,0,.34);display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.16)}
+body.thumbs-open .thumbPane{transform:translateX(0);opacity:1;pointer-events:auto}
+.thumbHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 16px 12px;border-bottom:1px solid rgba(255,255,255,.14);font-family:Arial,sans-serif}
+.thumbHeader strong{font-size:15px}
+.thumbHeader button,.overviewHeader button{border:0;border-radius:999px;background:white;color:#111;font-weight:700;padding:5px 10px;cursor:pointer}
+.thumbList{overflow:auto;padding:12px 12px 18px;display:grid;gap:10px}
+.thumb{display:grid;grid-template-columns:116px 1fr;gap:10px;text-align:left;width:100%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:white;border-radius:12px;padding:8px;cursor:pointer}
+.thumb:hover,.thumb.active{border-color:var(--orange);background:rgba(241,138,44,.18)}
+.thumbMini,.overviewMini{aspect-ratio:16/9;background:#fff;border-radius:5px;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.thumbMini:before,.overviewMini:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f4f6fa 0 48%,#fff 48% 100%)}
+.thumbTop{position:absolute;left:0;right:0;top:0;height:19%;background:var(--blue)}
+.thumbTitle{position:absolute;left:8%;right:8%;top:28%;font:700 7px/1.08 Arial,sans-serif;color:#111;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.thumbLines{position:absolute;left:8%;right:8%;top:56%;height:26%;background:repeating-linear-gradient(to bottom,#d7dce3 0 2px,transparent 2px 7px)}
+.thumbMeta{font-family:Arial,sans-serif;display:flex;flex-direction:column;gap:3px;justify-content:center;min-width:0}
+.thumbMeta strong{font-size:12px;color:#f7b77d}
+.thumbMeta span{font-size:13px;line-height:1.22;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.overviewPane{position:fixed;inset:0;background:rgba(15,23,42,.90);backdrop-filter:blur(4px);color:white;z-index:115;opacity:0;pointer-events:none;transition:opacity .25s ease;display:flex;flex-direction:column}
+body.overview-open .overviewPane{opacity:1;pointer-events:auto}
+.overviewHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:Arial,sans-serif}
+.overviewHeader strong{display:block;font-size:17px}
+.overviewHeader small{display:block;color:rgba(255,255,255,.68);margin-top:3px}
+.overviewScroller{overflow:auto;padding:22px}
+.overviewGroups{display:grid;gap:24px}
+.overviewGroupHeader{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.overviewGroupHeader h3{margin:0;font:700 18px/1.2 Arial,sans-serif;color:white}
+.overviewGroupHeader p{margin:0;font:400 12px/1.3 Arial,sans-serif;color:rgba(255,255,255,.68)}
+.overviewGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.overviewThumb{display:flex;flex-direction:column;gap:10px;text-align:left;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:14px;padding:10px;cursor:pointer}
+.overviewThumb:hover,.overviewThumb.active{border-color:var(--orange);background:rgba(241,138,44,.12)}
+.overviewMini .thumbTitle{font:700 10px/1.1 Arial,sans-serif;left:7%;right:7%;top:28%}
+.overviewMeta span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:1.25;color:white}
+.slide .canvas{transition:box-shadow .28s ease,filter .28s ease}
+.slide.is-active .canvas{box-shadow:0 22px 62px rgba(0,0,0,.44),0 0 0 1px rgba(241,138,44,.16)}
+.slide-enter .canvas{animation:slideFocus .34s ease both}
+.slide.section-transition .canvas:after{content:"";position:absolute;left:0;right:0;top:12%;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.55;animation:sectionSweep .38s ease both;z-index:9;pointer-events:none}
+.reveal-item{opacity:0;transform:translateY(10px);transition:opacity .32s ease,transform .32s ease}
+.reveal-visible{opacity:1;transform:translateY(0)}
+@keyframes slideFocus{from{opacity:.92;filter:saturate(.94);transform:translateY(4px)}to{opacity:1;filter:saturate(1);transform:translateY(0)}}
+@keyframes sectionSweep{from{transform:translateX(-28%);opacity:0}45%{opacity:.55}to{transform:translateX(28%);opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .deck,.slide .canvas,.reveal-item,.láser-trace,.progress,.thumbPane,.overviewPane{transition:none!important;animation:none!important}
+  .reveal-item{opacity:1!important;transform:none!important}
+}
+@media (max-width:900px){.thumbPane{width:min(340px,82vw)}.overviewScroller{padding:16px}.overviewGrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}}
+@media print{body{display:block;background:white;overflow:visible}.deck{display:block;transform:none!important;width:auto;height:auto}.slide{page-break-after:always;width:100vw;height:56.25vw;background:white}.canvas{width:100vw;height:56.25vw;box-shadow:none}.controls,.progress,.thumbPane,.overviewPane,.láser-dot{display:none}}
+</style>
+</head>
+<body>
+<main class="deck">
+<section class="slide waiting" data-group="Apertura"><div class="canvas"><div class="brandMark"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="waitCopy"><h1>Derecho Administrativo 1</h1><p>Sesión 10 · La clase iniciará en breve</p></div><div class="orangeBlock"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="welcomeText"><h1>Sesión 10: Validez y eficacia del acto administrativo</h1><p>Requisitos de validez, presunción, nulidad, conservación, notificación y producción de efectos</p><p class="tiny">Profesor Dante Ramón Guerrero Barreto · Universidad Científica del Sur</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Recordatorio: venimos del acto administrativo</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Sesión 9</h3><p>Identificamos el acto como declaración de una entidad con efectos jurídicos concretos.</p></div><div class="card"><h3>Ahora</h3><p>Preguntamos si nació conforme al ordenamiento y cuándo despliega efectos.</p></div><div class="card"><h3>Clave</h3><p>Existencia, validez y eficacia responden preguntas distintas.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 1, 3, 8 y 16.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Objetivos de aprendizaje</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Distinguir</h3><p>Separar existencia, validez, presunción, nulidad, conservación y eficacia.</p></div><div class="card"><h3>Aplicar</h3><p>Usar los artículos 3, 8 al 17 y reglas de notificación para resolver casos.</p></div><div class="card"><h3>Argumentar</h3><p>Explicar por qué un defecto de notificación no equivale automáticamente a invalidez.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. III, IV, 3, 8, 15 y 16.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Agenda de la clase</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Validez</h3><p>Legalidad, requisitos, forma, objeto y motivación.</p></div><div class="card"><h3>Nulidad</h3><p>Presunción, causales, efectos, alcances y conservación.</p></div><div class="card"><h3>Eficacia</h3><p>Notificación, eficacia anticipada y casos prácticos.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, Título I.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Apertura"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Mapa conceptual</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Existencia</h3><p>Hay declaración atribuible a una entidad.</p></div><div class="card"><h3>Validez</h3><p>El acto se ajusta al ordenamiento jurídico.</p></div><div class="card"><h3>Eficacia</h3><p>Puede producir efectos jurídicos frente al administrado.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 1, 8, 15 y 16.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>I. ¿Qué problema resuelve la validez?</h1><p>La validez controla la conformidad del acto con el ordenamiento jurídico.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Acto administrativo: punto de partida</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Declaración</h3><p>Proviene de una entidad en el marco de normas de derecho público.</p></div><div class="card"><h3>Efectos</h3><p>Produce efectos jurídicos sobre intereses, obligaciones o derechos.</p></div><div class="card"><h3>Situación concreta</h3><p>No es una regla general abstracta.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 1.1.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Validez como conformidad jurídica</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla</h3><p>Es válido el acto administrativo dictado conforme al ordenamiento jurídico.</p></div><div class="card"><h3>Control</h3><p>Revisar competencia, objeto, finalidad, motivación, procedimiento y forma.</p></div><div class="card"><h3>Advertencia</h3><p>No confundir validez con eficacia.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 3 y 8.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Requisitos de validez: visión general</div><div class="content"><table class="matrix"><thead><tr><th>Requisito</th><th>Pregunta de control</th><th>Riesgo típico</th></tr></thead><tbody><tr><td>Competencia</td><td>¿El órgano podía decidir?</td><td>Órgano, materia o grado incorrecto.</td></tr><tr><td>Objeto o contenido</td><td>¿La decisión es lícita, posible y precisa?</td><td>Contenido prohibido, oscuro o imposible.</td></tr><tr><td>Finalidad pública</td><td>¿Se usa la potestad para el fin legal?</td><td>Desviación de poder.</td></tr><tr><td>Motivación</td><td>¿Hay hechos y razones jurídicas?</td><td>Fórmulas vacías o insuficientes.</td></tr><tr><td>Procedimiento regular</td><td>¿Se siguió el trámite previsto?</td><td>Omisión de etapas esenciales.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 3.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Competencia</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla</h3><p>Órgano facultado por materia, territorio, grado, tiempo o cuantía.</p></div><div class="card"><h3>Colegiados</h3><p>Sesión, quórum y deliberación indispensable.</p></div><div class="card"><h3>Legalidad</h3><p>Actuar dentro de facultades atribuidas y fines conferidos.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. IV.1.1 y 3.1.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Objeto o contenido</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Objeto</h3><p>Debe expresar inequívocamente los efectos jurídicos.</p></div><div class="card"><h3>Límites</h3><p>No puede ser prohibido, incompatible, impreciso, oscuro o imposible.</p></div><div class="card"><h3>Cobertura</h3><p>Comprende cuestiones de hecho y derecho planteadas.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 3.2 y 5.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Finalidad pública</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Fin legal</h3><p>Adecuarse a finalidades de interés público de la norma habilitante.</p></div><div class="card"><h3>Desviación</h3><p>No perseguir fines personales, de terceros o fines públicos distintos.</p></div><div class="card"><h3>Razonabilidad</h3><p>En gravámenes, mantener proporción con los fines tutelados.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. IV.1.4 y 3.3.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Motivación</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Contenido</h3><p>Relación concreta de hechos probados y razones jurídicas.</p></div><div class="card"><h3>No basta</h3><p>No sirven fórmulas generales, vacías, oscuras o insuficientes.</p></div><div class="card"><h3>Excepciones</h3><p>La LPAG admite supuestos que no precisan motivación.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 3.4 y 6.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Procedimiento regular</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Antes de emitir</h3><p>El acto debe formarse cumpliendo el procedimiento previsto.</p></div><div class="card"><h3>Garantía</h3><p>Incluye notificación, defensa, prueba, decisión motivada e impugnación.</p></div><div class="card"><h3>Pregunta guía</h3><p>¿La omisión afectó defensa, prueba o sentido de la decisión?</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. IV.1.2 y 3.5.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Validez"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Forma del acto administrativo</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla escrita</h3><p>Debe expresarse por escrito, salvo forma distinta con constancia.</p></div><div class="card"><h3>Contenido formal</h3><p>Fecha, lugar, órgano, nombre y firma de autoridad.</p></div><div class="card"><h3>Automatización</h3><p>Debe conocerse nombre y cargo de la autoridad que expide.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 4.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Presunción"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>II. Presunción de validez</h1><p>La LPAG permite operar al acto mientras su nulidad no haya sido declarada.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Presunción"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Presunción de validez</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla</h3><p>Todo acto se considera válido mientras su nulidad no sea declarada.</p></div><div class="card"><h3>Consecuencia</h3><p>La ilegalidad debe alegarse y procesarse por la vía correspondiente.</p></div><div class="card"><h3>Operatividad</h3><p>La presunción sostiene la exigibilidad provisional del acto.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 9; Morón Urbina (2019), p. 256.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>III. Nulidad y conservación</h1><p>La invalidez grave priva de validez; los vicios no trascendentes pueden conservarse.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Causales de nulidad</div><div class="content"><table class="matrix"><thead><tr><th>Causal</th><th>Lectura para clase</th></tr></thead><tbody><tr><td>Contravención normativa</td><td>Acto contrario a Constitución, leyes o normas reglamentarias.</td></tr><tr><td>Requisito de validez</td><td>Defecto u omisión de requisitos, salvo conservación.</td></tr><tr><td>Aprobación automática o silencio positivo</td><td>Adquisición contraria al ordenamiento o sin requisitos esenciales.</td></tr><tr><td>Infracción penal</td><td>Acto constitutivo de infracción penal o dictado como consecuencia de ella.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 10.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Instancia competente para declarar nulidad</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Administrado</h3><p>Plantea nulidad mediante recursos administrativos.</p></div><div class="card"><h3>De oficio</h3><p>La conoce la autoridad superior, salvo ausencia de subordinación.</p></div><div class="card"><h3>Responsabilidad</h3><p>La resolución dispone lo conveniente sobre responsabilidad del emisor.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 11.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Efectos de la declaración de nulidad</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Retroactividad</h3><p>Efecto declarativo y retroactivo a la fecha del acto, salvo derechos de buena fe.</p></div><div class="card"><h3>Obligación</h3><p>Los administrados no están obligados a cumplir el acto declarado nulo.</p></div><div class="card"><h3>Imposibilidad</h3><p>Si no puede retrotraerse, puede generar responsabilidad e indemnización.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 12.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Alcances de la nulidad</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Nulidad parcial</h3><p>No alcanza partes independientes que puedan conservarse.</p></div><div class="card"><h3>Actos sucesivos</h3><p>Arrastra actos sucesivos vinculados causalmente.</p></div><div class="card"><h3>Fondo</h3><p>La autoridad puede resolver si cuenta con elementos suficientes.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 13; Morón Urbina (2019), pp. 268-269.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Conservación del acto</div><div class="content"><table class="matrix"><thead><tr><th>Vicio no trascendente</th><th>Razón para conservar</th></tr></thead><tbody><tr><td>Contenido impreciso o incongruente</td><td>Puede enmendarse sin cambiar lo esencial.</td></tr><tr><td>Motivación insuficiente o parcial</td><td>Puede completarse sin alterar el sentido.</td></tr><tr><td>Formalidad no esencial</td><td>No cambió la decisión ni afectó debido proceso.</td></tr><tr><td>Mismo contenido inevitable</td><td>El acto habría tenido igual contenido sin el vicio.</td></tr><tr><td>Omisión documental no esencial</td><td>La falta no afecta requisito sustancial.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 14; Morón Urbina (2019), p. 272.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Nulidad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Independencia de ejecución o notificación</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla</h3><p>Los vicios en ejecución o notificación son independientes de la validez.</p></div><div class="card"><h3>Advertencia</h3><p>No todo defecto de notificación invalida el acto.</p></div><div class="card"><h3>Efecto posible</h3><p>Puede afectar eficacia, plazo o defensa, según el caso.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 15.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>IV. Eficacia y notificación</h1><p>La eficacia mira cuándo el acto puede producir efectos jurídicos frente al administrado.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Eficacia ordinaria</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla</h3><p>El acto es eficaz desde que la notificación legalmente realizada produce sus efectos.</p></div><div class="card"><h3>Diferencia</h3><p>Un acto puede ser válido, pero aún no oponible.</p></div><div class="card"><h3>Concepto</h3><p>La eficacia es capacidad de producir efectos jurídicos.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 16.1; Guzmán Napurí (2013), p. 355.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Notificación como presupuesto de eficacia</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Conocimiento</h3><p>Permite conocer el acto y ejercer defensa real.</p></div><div class="card"><h3>Efectos</h3><p>Activa efectos, plazos e impugnación cuando se realiza conforme a ley.</p></div><div class="card"><h3>Separación</h3><p>El defecto se analiza separado de la validez del acto.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 15, 16 y 18.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Obligación de notificar</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Deber</h3><p>La notificación debe practicarse de oficio y con diligencia.</p></div><div class="card"><h3>Destinatario</h3><p>Se dirige a quien deba conocer el acto para defensa o cumplimiento.</p></div><div class="card"><h3>Debido procedimiento</h3><p>El derecho a ser notificado integra sus garantías.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. IV.1.2 y 18.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Modalidades de notificación</div><div class="content"><table class="matrix"><thead><tr><th>Modalidad</th><th>Uso didáctico</th></tr></thead><tbody><tr><td>Personal</td><td>Entrega al administrado o domicilio señalado.</td></tr><tr><td>Correo certificado o medio similar</td><td>Exige constancia y condiciones legales.</td></tr><tr><td>Publicación</td><td>Opera en supuestos previstos por pluralidad o imposibilidad.</td></tr><tr><td>Medios electrónicos</td><td>Requiere marco electrónico, casilla o consentimiento aplicable.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 20.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Contenido y plazo de notificación</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Contenido</h3><p>Texto íntegro del acto y datos para conocer su alcance.</p></div><div class="card"><h3>Impugnación</h3><p>Recursos procedentes, órgano y plazo cuando corresponda.</p></div><div class="card"><h3>Plazo</h3><p>La entidad debe efectuarla dentro del plazo legal previsto.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 24.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Vigencia de las notificaciones</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Regla</h3><p>Produce efectos según modalidad y reglas de vigencia.</p></div><div class="card"><h3>Plazos</h3><p>Activa cómputos para cumplimiento o impugnación.</p></div><div class="card"><h3>Garantía</h3><p>Debe leerse con defensa y conocimiento efectivo.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. IV.1.2 y 25.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Notificaciones defectuosas y saneamiento</div><div class="content"><table class="matrix"><thead><tr><th>Problema</th><th>Pauta</th></tr></thead><tbody><tr><td>Defecto formal</td><td>Revisar si impidió conocimiento, defensa o cómputo.</td></tr><tr><td>Conocimiento efectivo</td><td>Puede sanearse si se demuestra conocimiento del acto.</td></tr><tr><td>Corrección</td><td>La entidad puede corregir la notificación defectuosa.</td></tr><tr><td>Validez</td><td>El defecto se separa de los requisitos del acto emitido.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 15, 26 y 27.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Eficacia anticipada</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Excepción</h3><p>Puede disponerse eficacia anterior a la emisión solo en supuestos estrictos.</p></div><div class="card"><h3>Límites</h3><p>Debe ser más favorable y no lesionar derechos fundamentales ni intereses de terceros.</p></div><div class="card"><h3>Hecho previo</h3><p>Debe existir el supuesto de hecho en la fecha retrotraída.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 17.1.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Actos favorables y eficacia desde emisión</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Beneficio</h3><p>El acto favorable se entiende eficaz desde su emisión.</p></div><div class="card"><h3>Salvedad</h3><p>El propio acto o norma aplicable puede establecer regla distinta.</p></div><div class="card"><h3>Prudencia</h3><p>No es retroactividad general; para anticipar eficacia rige el artículo 17.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 16.2 y 17.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Eficacia"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Comparación visual</div><div class="content"><table class="matrix"><thead><tr><th>Categoría</th><th>Pregunta</th><th>Ejemplo</th></tr></thead><tbody><tr><td>Existente</td><td>¿Hay declaración administrativa?</td><td>Resolución emitida por entidad.</td></tr><tr><td>Válido</td><td>¿Cumple ordenamiento?</td><td>Órgano competente y motivación suficiente.</td></tr><tr><td>Inválido</td><td>¿Hay vicio trascendente?</td><td>Órgano incompetente.</td></tr><tr><td>Eficaz</td><td>¿Puede producir efectos?</td><td>Acto legalmente notificado.</td></tr><tr><td>Ineficaz</td><td>¿Falta presupuesto de efectos?</td><td>Resolución válida no notificada.</td></tr><tr><td>Conservable</td><td>¿Vicio no trascendente?</td><td>Motivación parcial subsanable.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 1, 8, 10, 14, 15 y 16.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="bgLeft"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="sectionText"><h1>V. Casos y actividad</h1><p>Aplicamos la diferencia entre validez, nulidad y eficacia.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Caso 1: licencia municipal</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Hechos</h3><p>Una municipalidad otorga licencia mediante órgano sin competencia.</p></div><div class="card"><h3>Problema</h3><p>¿El defecto afecta validez, eficacia o ambas?</p></div><div class="card"><h3>Pauta</h3><p>Competencia es requisito de validez; puede activar nulidad, aunque rija presunción.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 3.1, 9 y 10.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Caso 2: sanción mal notificada</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Hechos</h3><p>Resolución sancionadora motivada y competente, pero mal notificada.</p></div><div class="card"><h3>Problema</h3><p>¿El acto es inválido o ineficaz frente al administrado?</p></div><div class="card"><h3>Pauta</h3><p>Separar validez del acto y eficacia de la notificación.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 15, 16, 24, 25, 26 y 27.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Caso 3: eficacia anticipada</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Hechos</h3><p>Una entidad reconoce un beneficio y pretende efectos desde fecha anterior.</p></div><div class="card"><h3>Problema</h3><p>¿Cuándo procede retrotraer efectos?</p></div><div class="card"><h3>Pauta</h3><p>Más favorable, sin dañar terceros ni derechos fundamentales, y con supuesto de hecho existente.</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, art. 17.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Actividad: ¿validez, eficacia o nulidad?</div><div class="content"><table class="matrix"><thead><tr><th>Supuesto</th><th>Clasificación inicial</th></tr></thead><tbody><tr><td>Órgano incompetente</td><td>Validez / posible nulidad.</td></tr><tr><td>Acto válido no notificado</td><td>Eficacia pendiente.</td></tr><tr><td>Motivación insuficiente</td><td>Validez; evaluar conservación.</td></tr><tr><td>Notificación defectuosa saneada</td><td>Eficacia; no invalidez automática.</td></tr><tr><td>Acto favorable desde emisión</td><td>Eficacia según art. 16.2.</td></tr><tr><td>Eficacia anticipada que afecta a tercero</td><td>Improcedencia.</td></tr><tr><td>Error formal no trascendente</td><td>Conservación posible.</td></tr><tr><td>Acto contrario a norma reglamentaria</td><td>Nulidad por contravención.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 10, 14, 15, 16, 17, 26 y 27; actividad didáctica.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Pauta breve de corrección</div><div class="content"><table class="matrix"><thead><tr><th>Respuesta</th><th>Justificación mínima</th></tr></thead><tbody><tr><td>Validez</td><td>Mira competencia, objeto, finalidad, motivación, procedimiento y forma.</td></tr><tr><td>Nulidad</td><td>Exige vicio trascendente dentro de causales legales.</td></tr><tr><td>Conservación</td><td>Opera para vicios no trascendentes listados por la LPAG.</td></tr><tr><td>Eficacia</td><td>Depende de notificación legal o reglas especiales de efectos.</td></tr><tr><td>Saneamiento</td><td>Puede corregir notificación sin cambiar validez del acto.</td></tr></tbody></table><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 3, 10, 14, 15, 16, 26 y 27.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Casos y actividad"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Preguntas de debate</div><div class="content"><div class="threeCols"><div class="card blue"><h3>Presunción</h3><p>¿Protege la eficacia administrativa o pone en riesgo al administrado?</p></div><div class="card"><h3>Conservación</h3><p>¿Cuándo conviene conservar un acto viciado y cuándo declarar nulidad?</p></div><div class="card"><h3>Notificación</h3><p>¿Garantía formal o condición real de defensa?</p></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. IV.1.2, 9, 14, 15 y 16.</p></div><div class="slideNo"></div></div></section>
+<section class="slide" data-group="Cierre"><div class="canvas"><div class="topbar"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="headerTitle">Cierre: 5 ideas clave</div><div class="content"><div class="keyIdeas"><div class="keyIdea"><b>1</b><div><h3>La validez mira la conformidad del acto con el ordenamiento jurídico.</h3></div></div><div class="keyIdea"><b>2</b><div><h3>La eficacia mira cuándo el acto puede producir efectos jurídicos frente al administrado.</h3></div></div><div class="keyIdea"><b>3</b><div><h3>La presunción de validez sostiene la operatividad del acto mientras no se declare su nulidad.</h3></div></div><div class="keyIdea"><b>4</b><div><h3>No todo vicio destruye el acto: la LPAG permite conservar actos con vicios no trascendentes.</h3></div></div><div class="keyIdea"><b>5</b><div><h3>La notificación es decisiva para la eficacia y para el ejercicio real del derecho de defensa.</h3></div></div></div><p class="source">Fuente: D.S. N.° 006-2026-JUS, TUO de la Ley N.° 27444, arts. 9, 14, 15 y 16.</p></div><div class="slideNo"></div></div></section>
+<section class="slide finalThanks" data-group="Cierre"><div class="canvas"><div class="thanksAccent"></div><img class="ucsurLogo" src="Logo_de_la_Universidad_Científica_del_Sur.png" alt="Universidad Científica del Sur"><div class="thanksWrap"><p class="thanksKicker">Derecho Administrativo 1</p><h1>Gracias</h1><div class="thanksRule"></div><p class="thanksName">Profesor Dante Guerrero</p><p class="thanksEmail">dguerrerob@cientifica.edu.pe</p><p class="thanksUni">Universidad Científica del Sur</p></div><div class="slideNo"></div></div></section>
+</main>
+<div class="controls"><button id="prev" title="Anterior">←</button><span id="counter"></span><button id="next" title="Siguiente">→</button><button id="láser" title="Activar puntero láser">Láser</button><button id="thumbToggle" title="Ver miniaturas laterales">Miniaturas</button><button id="overviewToggle" title="Ver vista general por secciones">Vista general</button></div>
+<aside aria-label="Navegador de miniaturas" class="thumbPane"><div class="thumbHeader"><strong>Vista de miniaturas</strong><button id="thumbClose">Cerrar</button></div><div class="thumbList"></div></aside>
+<section aria-label="Vista general por secciones" class="overviewPane"><div class="overviewHeader"><div><strong>Vista general por secciones</strong><small>Miniaturas agrupadas por bloques tematicos</small></div><button id="overviewClose">Cerrar</button></div><div class="overviewScroller"><div class="overviewGroups"></div></div></section>
+<div aria-hidden="true" class="láser-dot"></div>
+<div class="progress"></div>
+<script>
+const deck=document.querySelector('.deck');
+const slides=Array.from(document.querySelectorAll('.slide'));
+const counter=document.getElementById('counter');
+const progress=document.querySelector('.progress');
+const láserButton=document.getElementById('láser');
+const thumbButton=document.getElementById('thumbToggle');
+const overviewButton=document.getElementById('overviewToggle');
+const thumbList=document.querySelector('.thumbList');
+const overviewGroups=document.querySelector('.overviewGroups');
+const láserDot=document.querySelector('.láser-dot');
+let idx=0;
+let láserOn=false;
+let lastTraceAt=0;
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+function slideTitle(slide,i){return slide.querySelector('.headerTitle')?.textContent.trim()||slide.querySelector('.welcomeText h1, .sectionText h1, h1, h2, h3')?.textContent.trim()||`Diapositiva ${i+1}`;}
+function escapeHtml(text){return text.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+function sectionForSlide(slide){
+  const group=slide.dataset.group||'Contenido';
+  const details={
+    'Apertura':'Contexto, objetivos y ruta de clase',
+    'Concepto':'Definicion doctrinaria y legal del acto',
+    'Elementos':'Efectos juridicos, concrecion y declaraciones',
+    'Exclusiones':'Actos internos, contratos, hechos y fronteras',
+    'Clasificacion':'Categorias para ordenar efectos y control',
+    'Casos y actividad':'Ejemplos peruanos y trabajo aplicado',
+    'Cierre':'Sintesis y agradecimiento'
+  };
+  return {key:group.toLowerCase().replace(/\s+/g,'-'),name:group,detail:details[group]||''};
+}
+function thumbPreview(title){return `<div class="thumbMini"><div class="thumbTop"></div><div class="thumbTitle">${escapeHtml(title)}</div><div class="thumbLines"></div></div>`;}
+function makeThumbs(){
+  thumbList.innerHTML='';
+  slides.forEach((slide,i)=>{
+    const button=document.createElement('button');
+    const title=slideTitle(slide,i);
+    button.type='button';
+    button.className='thumb';
+    button.innerHTML=`${thumbPreview(title)}<div class="thumbMeta"><strong>N° ${i+1}</strong><span>${escapeHtml(title)}</span></div>`;
+    button.addEventListener('click',()=>{go(i);setThumbs(false);});
+    thumbList.appendChild(button);
+  });
+}
+function makeOverview(){
+  overviewGroups.innerHTML='';
+  const groups=[];
+  slides.forEach((slide,i)=>{
+    const meta=sectionForSlide(slide);
+    let group=groups.find(item=>item.key===meta.key);
+    if(!group){group={...meta,items:[]};groups.push(group);}
+    group.items.push({index:i,title:slideTitle(slide,i)});
+  });
+  groups.forEach(group=>{
+    const wrap=document.createElement('section');
+    wrap.className='overviewGroup';
+    wrap.innerHTML=`<div class="overviewGroupHeader"><div><h3>${escapeHtml(group.name)}</h3><p>${escapeHtml(group.detail)}</p></div></div><div class="overviewGrid"></div>`;
+    const grid=wrap.querySelector('.overviewGrid');
+    group.items.forEach(item=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='overviewThumb';
+      button.dataset.index=item.index;
+      button.innerHTML=`<div class="overviewMini"><div class="thumbTop"></div><div class="thumbTitle">${escapeHtml(item.title)}</div><div class="thumbLines"></div></div><div class="overviewMeta"><strong>N° ${item.index+1}</strong><span>${escapeHtml(item.title)}</span></div>`;
+      button.addEventListener('click',()=>{go(item.index);setOverview(false);});
+      grid.appendChild(button);
+    });
+    overviewGroups.appendChild(wrap);
+  });
+}
+function setThumbs(on){if(on)setOverview(false);document.body.classList.toggle('thumbs-open',on);thumbButton.classList.toggle('active',on);thumbButton.setAttribute('aria-pressed',String(on));}
+function setOverview(on){if(on)setThumbs(false);document.body.classList.toggle('overview-open',on);overviewButton.classList.toggle('active',on);overviewButton.setAttribute('aria-pressed',String(on));}
+function setLáser(on){láserOn=on;document.body.classList.toggle('láser-on',on);láserButton.classList.toggle('active',on);láserButton.setAttribute('aria-pressed',String(on));}
+function updateThumbs(){
+  Array.from(document.querySelectorAll('.thumb')).forEach((item,i)=>item.classList.toggle('active',i===idx));
+  Array.from(document.querySelectorAll('.overviewThumb')).forEach(item=>item.classList.toggle('active',Number(item.dataset.index)===idx));
+}
+function syncSlideNumbers(){
+  slides.forEach((slide,i)=>{const number=slide.querySelector('.slideNo');if(number)number.textContent=`N° ${i+1}`;});
+}
+const motionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
+const revealSelector='.card,.conceptCard,.quoteBox,.blueBlock,.noteBox,.debateBox,.debateCard,.caseCard,.activityCard,.flowItem,.qTile,.keyIdea,.matrix,.promptLead,.welcomeText,.sessionIntro,.sectionText';
+let revealTimer=0;
+function prepareRevealItems(){slides.forEach(slide=>{slide.querySelectorAll(revealSelector).forEach(item=>item.classList.add('reveal-item'));});}
+function revealSlide(slide,previousIdx=idx){
+  window.clearTimeout(revealTimer);
+  slides.forEach(item=>item.classList.remove('is-active','slide-enter','section-transition'));
+  slide.classList.add('is-active');
+  if(motionQuery.matches){slide.querySelectorAll('.reveal-item').forEach(item=>item.classList.add('reveal-visible'));return;}
+  slide.classList.add('slide-enter');
+  const previousGroup=slides[previousIdx]?.dataset.group;
+  const currentGroup=slide.dataset.group;
+  if(previousIdx!==idx&&previousGroup&&previousGroup!==currentGroup)slide.classList.add('section-transition');
+  const items=Array.from(slide.querySelectorAll('.reveal-item'));
+  items.forEach(item=>item.classList.remove('reveal-visible'));
+  items.forEach((item,i)=>{item.style.transitionDelay=`${Math.min(i*45,270)}ms`;requestAnimationFrame(()=>item.classList.add('reveal-visible'));});
+  revealTimer=window.setTimeout(()=>{slide.classList.remove('slide-enter','section-transition');items.forEach(item=>{item.style.transitionDelay='';});},520);
+}
+motionQuery.addEventListener?.('change',()=>revealSlide(slides[idx]));
+function go(n){
+  const previousIdx=idx;
+  idx=clamp(n,0,slides.length-1);
+  deck.style.transform=`translateX(${-idx*100}vw)`;
+  counter.textContent=`${idx+1} / ${slides.length}`;
+  progress.style.width=`${((idx+1)/slides.length)*100}%`;
+  location.hash=idx+1;
+  updateThumbs();
+  revealSlide(slides[idx],previousIdx);
+}
+window.addEventListener('keydown',event=>{
+  const key=event.key;
+  if(['ArrowRight','PageDown',' '].includes(key)){event.preventDefault();go(idx+1);}
+  if(['ArrowLeft','PageUp'].includes(key)){event.preventDefault();go(idx-1);}
+  if(key==='Home')go(0);
+  if(key==='End')go(slides.length-1);
+  if(key.toLowerCase()==='l')setLáser(!láserOn);
+  if(key.toLowerCase()==='m')setThumbs(!document.body.classList.contains('thumbs-open'));
+  if(key.toLowerCase()==='p')setOverview(!document.body.classList.contains('overview-open'));
+  if(key==='Escape'){setThumbs(false);setOverview(false);setLáser(false);}
+});
+window.addEventListener('mousemove',event=>{
+  if(!láserOn)return;
+  láserDot.style.left=event.clientX+'px';
+  láserDot.style.top=event.clientY+'px';
+  const now=performance.now();
+  if(now-lastTraceAt>28){
+    lastTraceAt=now;
+    const trace=document.createElement('div');
+    trace.className='láser-trace';
+    trace.style.left=event.clientX+'px';
+    trace.style.top=event.clientY+'px';
+    document.body.appendChild(trace);
+    setTimeout(()=>trace.remove(),900);
+  }
+});
+document.getElementById('next').onclick=()=>go(idx+1);
+document.getElementById('prev').onclick=()=>go(idx-1);
+láserButton.onclick=()=>setLáser(!láserOn);
+thumbButton.onclick=()=>setThumbs(!document.body.classList.contains('thumbs-open'));
+overviewButton.onclick=()=>setOverview(!document.body.classList.contains('overview-open'));
+document.getElementById('thumbClose').onclick=()=>setThumbs(false);
+document.getElementById('overviewClose').onclick=()=>setOverview(false);
+window.addEventListener('resize',()=>go(idx));
+prepareRevealItems();
+syncSlideNumbers();
+makeThumbs();
+makeOverview();
+const start=parseInt(location.hash.replace('#',''),10);
+if(start)idx=start-1;
+go(idx);
+</script>
+</body>
+</html>

@@ -1,14 +1,14 @@
 # Índice de conversión
 
-Fecha de conversión: 2026-06-20
+Fecha de conversión: 2026-06-28
 
 Directorio de origen: `01-insumos_originales`
 Directorio de salida: `02-material_de_referencia`
 
 ## Resumen
 
-- Archivos detectados: 14
-- Ya convertidos: 14
+- Archivos detectados: 16
+- Ya convertidos: 16
 - Nuevos convertidos: 0
 - Omitidos por formato no soportado: 0
 - Archivos con error: 0
@@ -27,7 +27,9 @@ Directorio de salida: `02-material_de_referencia`
 | `01-insumos_originales/Sesión 1.pdf` | `02-material_de_referencia/Sesión 1.md` | pdf | 72dcb6e7879c | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/examen_parcial.pdf` | `02-material_de_referencia/examen_parcial.md` | pdf | f77edd6f55b9 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/principios_derecho_administrativo_articulo_iv_serio_reducido.html` | `02-material_de_referencia/principios_derecho_administrativo_articulo_iv_serio_reducido.md` | html | d232abf99529 | omitido_ya_convertido | Ya existe conversión previa. |
+| `01-insumos_originales/sesion10 - validez y eficacia del acto administrativo.pdf` | `02-material_de_referencia/sesion10 - validez y eficacia del acto administrativo.md` | pdf | 3ab69f248a03 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion3.html` | `02-material_de_referencia/sesion3.md` | html | 33899935adec | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion6.pdf` | `02-material_de_referencia/sesion6.md` | pdf | 6de5a5f295b5 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion7.pdf` | `02-material_de_referencia/sesion7.md` | pdf | 941135e5b7ad | omitido_ya_convertido | Ya existe conversión previa. |
+| `01-insumos_originales/sesion9 - acto administrativo.pdf` | `02-material_de_referencia/sesion9.md` | pdf | a0df5b363426 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/syllabus.pdf` | `02-material_de_referencia/syllabus.md` | pdf | 03703d25b022 | omitido_ya_convertido | Ya existe conversión previa. |

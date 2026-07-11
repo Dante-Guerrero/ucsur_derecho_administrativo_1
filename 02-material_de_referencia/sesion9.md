@@ -1,6 +1,6 @@
 ---
-titulo: "sesion8"
-archivo_origen: "01-insumos_originales/sesion8.pdf"
+titulo: "sesion9"
+archivo_origen: "01-insumos_originales/sesion9 - acto administrativo.pdf"
 formato_origen: "pdf"
 hash_origen: "a0df5b3634266dda9df9f0c123abb6aca3bb1f614ae218353c8e7ee35fd5ac3a"
 fecha_conversion: "2026-06-27"

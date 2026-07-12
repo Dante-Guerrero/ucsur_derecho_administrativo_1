@@ -1,14 +1,14 @@
 # Índice de conversión
 
-Fecha de conversión: 2026-07-11
+Fecha de conversión: 2026-07-12
 
 Directorio de origen: `01-insumos_originales`
 Directorio de salida: `02-material_de_referencia`
 
 ## Resumen
 
-- Archivos detectados: 16
-- Ya convertidos: 14
+- Archivos detectados: 17
+- Ya convertidos: 15
 - Nuevos convertidos: 1
 - Omitidos por formato no soportado: 0
 - Archivos con error: 0
@@ -28,6 +28,7 @@ Directorio de salida: `02-material_de_referencia`
 | `01-insumos_originales/examen_parcial.pdf` | `02-material_de_referencia/examen_parcial.md` | pdf | f77edd6f55b9 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/principios_derecho_administrativo_articulo_iv_serio_reducido.html` | `02-material_de_referencia/principios_derecho_administrativo_articulo_iv_serio_reducido.md` | html | d232abf99529 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion13.pdf` | `02-material_de_referencia/sesion13.md` | pdf | c5af0eb25dcf | convertido | El sílabo ubica Transformación digital en el sector público en la sesión 13. El PDF fuente muestra internamente M4 - S12 y Sesión 12. Se conserva la discrepancia por trazabilidad y se usa sesion13 como numeración operativa del repositorio. |
+| `01-insumos_originales/sesion14.pdf` | `02-material_de_referencia/sesion14.md` | pdf | 0007e4f720f3 | convertido | El PDF identifica Semana 14 e integridad y lucha contra la corrupción; difiere del sílabo convertido. Para esta sesión prevalece el insumo específico y su contenido histórico debe contrastarse con el marco vigente. |
 | `01-insumos_originales/sesion3.html` | `02-material_de_referencia/sesion3.md` | html | 33899935adec | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion6.pdf` | `02-material_de_referencia/sesion6.md` | pdf | 6de5a5f295b5 | omitido_ya_convertido | Ya existe conversión previa. |
 | `01-insumos_originales/sesion7.pdf` | `02-material_de_referencia/sesion7.md` | pdf | 941135e5b7ad | omitido_ya_convertido | Ya existe conversión previa. |

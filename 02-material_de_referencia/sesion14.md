@@ -5,7 +5,7 @@ formato_origen: "pdf"
 hash_origen: "0007e4f720f3d4675c31c987bb31d3dc906075934cbdc971fa1d0d8c58c60892"
 fecha_conversion: "2026-07-12"
 estado_conversion: "borrador"
-observaciones: "El sílabo asigna a la sesión 14 el tema La Gestión Pública y las Políticas Públicas. Aunque el archivo se denomina sesion14.pdf, su portada interna indica Semana 14 y Política Nacional de Integridad y Lucha contra la Corrupción, que es también su contenido predominante. Se conserva la discrepancia por trazabilidad; el sílabo determina la numeración operativa del repositorio."
+observaciones: "El PDF identifica el contenido como Semana 14 y Política Nacional de Integridad y Lucha contra la Corrupción. Existe discrepancia con el tema de la sesión 14 consignado en el sílabo convertido; por indicación docente, para esta presentación prevalece el insumo específico. El contenido histórico del PDF debe contrastarse con normativa vigente."
 ---
 
 > Documento convertido automáticamente desde el insumo original. Revisar estructura, citas y posibles errores de extracción antes de usarlo como fuente docente.
